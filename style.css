@@ -32,8 +32,10 @@
     padding: 190px 0px;
     width: 500px;
     border: 2px solid #ccc;
-    border-radius: 16px;
-    
-    
+    border-radius: 16px;   
+}
+
+#lottieLogin{
+    margin: auto;
 }
 

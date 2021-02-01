@@ -20,13 +20,20 @@
 .btn{
     margin: 0px 200px;
 }
+#log-intitle{
+    width: 100px;
+    margin: auto;
+    
+}
 
 #Log-in{
     display: block;
-    margin: 100px auto;
-    padding: 200px 0px;
+    margin: 90px auto;
+    padding: 190px 0px;
     width: 500px;
-    background-color: beige;
+    border: 2px solid #ccc;
+    border-radius: 16px;
+    
     
 }
 

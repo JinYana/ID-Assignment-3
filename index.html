@@ -1,16 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>repl.it</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  </head>
-  <body>
-    <script src="script.js"></script>
-    
-  </body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>repl.it</title>
+        <link href="style.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        
+    </head>
+    <body>
+        <header class="masthead">
+            <div class="container d-flex h-100 align-items-center">
+                <div class="mx-auto text-center">
+                    <h1 id="mainHeader"class="mx-auto my-0 w-50">GameMart!</h1>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5" style="color: bisque;">Sign-up now and enhance your shopping experience!</h2>
+                </div>
+            </div>
+        </header>
+        <section>
+            <form id="Log-in">
+                <div class="form-group">
+                    <label for="formGroupExampleInput" class="text-white">Username</label>
+                    <input type="text" class="form-control" id="base-currency" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2" class="text-white">Password</label>
+                    <input type="text" class="form-control" id="comparison-currency" placeholder="Enter password">
+                </div>
+                <button type="submit" class="btn btn-primary">Log-in</button>
+            </form>
+        </section>
+        <script src="script.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </body>
 </html>

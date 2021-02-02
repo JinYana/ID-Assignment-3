@@ -2,6 +2,8 @@
 
 $(document).ready(function(){
 
+    $("#successAnimation").hide();
+
     $("#Log-in").submit(function(e){
         e.preventDefault();
 
@@ -28,6 +30,15 @@ $(document).ready(function(){
                 if (element.username == username && element.password == password){
                     console.log("Signing in...");
                     found=true;
+
+                    
+                    $("#mainAnimation").hide();
+                    $("#successAnimation").show();
+
+                    setTimeout(function (){
+                        $("#mainAnimation").show();
+                        window.location.href = "index.html";
+                    }, 2000);
                 }
             });
 

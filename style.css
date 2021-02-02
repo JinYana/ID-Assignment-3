@@ -35,7 +35,11 @@
     border-radius: 16px;   
 }
 
-#lottieLogin{
+#mainAnimation{
+    margin: auto;
+}
+
+#successAnimation{
     margin: auto;
 }
 

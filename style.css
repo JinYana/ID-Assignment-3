@@ -29,11 +29,21 @@
 #mainBlock{
     display: block;
     margin: 90px auto;
-    padding: 190px 0px;
+    padding: 120px 0px;
     width: 500px;
     border: 2px solid #ccc;
     border-radius: 16px;   
 }
+
+#signupBlock{
+    display: block;
+    margin: 90px auto;
+    padding: 120px 0px;
+    width: 500px;
+    border: 2px solid #ccc;
+    border-radius: 16px;   
+}
+
 
 #mainAnimation{
     margin: auto;

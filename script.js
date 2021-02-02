@@ -3,6 +3,7 @@
 $(document).ready(function(){
 
     $("#successAnimation").hide();
+    $("#signupBlock").hide();
 
     $("#Log-in").submit(function(e){
         e.preventDefault();
@@ -45,7 +46,52 @@ $(document).ready(function(){
             if (found == false){
                 console.log("Account not found!");
             }
-          });
+        });
+    })
+
+    $("#sign-up").submit(function(e){
+        e.preventDefault();
+        console.log("hello");
+
+        
+        let username = $('#signupUser').val();
+        let password = $('#signupPassw').val();
+        let email = $('#signupEmail').val();
+        
+        var jsondata = {
+            "username": username,
+            "password": password,
+            "email": email
+        }
+        
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://accountdatabase-35b2.restdb.io/rest/account",
+            "method": "POST",
+            "headers": {
+              "content-type": "application/json",
+              "x-apikey": "6017b0836adfba69db8b6c22",
+              "cache-control": "no-cache"
+            },
+            "processData": false,
+            "data": JSON.stringify(jsondata),
+            "beforeSend": function(){
+                //@TODO use loading bar instead
+                //disable our button or show loading bar
+                $("#submitsignup").prop("disabled", true);
+            }
+        }
+
+        $.ajax(settings).done(function(response){
+            console.log("Successful creation of account!");
+            window.location.href = "index.html";              
+        })
+    })
+
+    $("#startSignup").click(function(){
+        $("#mainBlock").hide();
+        $("#signupBlock").show();
     })
 })
 

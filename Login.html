@@ -26,19 +26,38 @@
                 <lottie-player id="successAnimation" src="https://assets6.lottiefiles.com/temp/lf20_aYCCN4.json"  background="transparent"
                   speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player>
                 
-                <h2 id= "log-intitle">Sign In</h2>
+                <h2 id= "log-intitle">Log In</h2>
                 <div class="form-group">
-                    <label for="formGroupExampleInput" class="text-white">Username</label>
-                    <input type="text" class="form-control" value="" id="username" placeholder="Enter username">
+                    <label for="username" class="text-white">Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter username" required>
                 </div>
                 <div class="form-group">
-                    <label for="formGroupExampleInput2" class="text-white">Password</label>
-                    <input type="text" class="form-control" id="password" placeholder="Enter password">
+                    <label for="password" class="text-white">Password</label>
+                    <input type="text" class="form-control" id="password" placeholder="Enter password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Log-in</button>
             </form>
 
-            <p>Don't have an account? <a>Sign up now!</a></p>
+            <p style="margin: auto; padding-top: 20px; width: 50%;">Don't have an account? <a id="startSignup">Sign up now!</a></p>
+        </section>
+        
+        <section id="signupBlock"> 
+            <form id="sign-up">  
+                <h2 id= "log-intitle">Sign Up</h2>
+                <div class="form-group">
+                    <label for="signupUser" class="text-white">Username</label>
+                    <input type="text" class="form-control" value="" id="signupUser" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassw" class="text-white">Password</label>
+                    <input type="text" class="form-control" id="signupPassw" placeholder="Enter password" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail" class="text-white">E-mail</label>
+                    <input type="email" class="form-control" id="signupEmail" placeholder="Enter password" required>
+                </div>
+                <button type="submit" id="submitsignup"class="btn btn-primary">Sign up</button>
+            </form>
         </section>
         <script src="script.js"></script>
         <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>

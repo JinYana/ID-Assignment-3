@@ -44,3 +44,27 @@ p{
     margin: 0px 200px;
 }
 
+/*Styling for home page(index.html)*/
+#inventory{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1000px;
+    height: auto;
+    
+    
+    
+}
+
+.item p{
+    width: 100px;
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+
+}
+
+.item{
+    width: 210px;
+    height: 210px;
+}

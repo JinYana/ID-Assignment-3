@@ -38,6 +38,7 @@ $(document).ready(function(){
 
                     setTimeout(function (){
                         $("#mainAnimation").show();
+                        $("#Log-in").trigger("reset");
                         window.location.href = "index.html";
                     }, 2000);
                 }

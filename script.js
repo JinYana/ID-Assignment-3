@@ -131,4 +131,58 @@ var settings = {
        document.getElementById("inventory").appendChild(item)
        
     }
+    document.getElementById("submit").addEventListener("click", function(event) {
+      event.preventDefault();
+      document.querySelectorAll('.item').forEach(e => e.remove())
+      for (i = 0; i < response.length; i++){
+        if(document.getElementById("category").value == "All"){
+          let item = document.createElement("div");
+          item.setAttribute("class", "item")
+          let title = document.createElement("p")
+          let price = document.createElement("p")
+          let img = document.createElement("img")
+          img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
+          img.setAttribute("width", "100px")
+          img.setAttribute("height", "100px")
+          let node = document.createTextNode(response[i].ItemName);
+          let number = document.createTextNode("$" + response[i].ItemPrice)
+          item.appendChild(img)
+          title.appendChild(node)
+          price.appendChild(number)
+          item.appendChild(title)
+          item.appendChild(price)
+          document.getElementById("inventory").appendChild(item)
+        }
+        
+        
+        else if(document.getElementById("category").value == response[i].ItemCategory){
+          let item = document.createElement("div");
+          item.setAttribute("class", "item")
+          let title = document.createElement("p")
+          let price = document.createElement("p")
+          let img = document.createElement("img")
+          img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
+          img.setAttribute("width", "100px")
+          img.setAttribute("height", "100px")
+          let node = document.createTextNode(response[i].ItemName);
+          let number = document.createTextNode("$" + response[i].ItemPrice)
+          item.appendChild(img)
+          title.appendChild(node)
+          price.appendChild(number)
+          item.appendChild(title)
+          item.appendChild(price)
+        
+         document.getElementById("inventory").appendChild(item)      
+        }
+        
+        
+         
+      }
+       
+      
+      
+        
+      
+      
+    })
   });

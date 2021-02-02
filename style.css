@@ -53,22 +53,39 @@
     margin: auto;
 }
 
-p{
+#donthaveaccount{
     width: 100px;
     margin: 0px 200px;
 }
 
 /*Styling for home page(index.html)*/
-#inventory{
+.parent{
     display: flex;
+    align-items: center;
+}
+
+
+
+#inventory{
+    display: inline-flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
     justify-content: space-around;
     max-width: 1000px;
     height: auto;
+    margin: auto;
+    margin-top: 200px;
     
     
     
+}
+
+#inventory h1{
+    width: 1000px;
+    margin: 0px 0px 30px 30px;
+    font-family: 'Noto Sans HK', sans-serif;
+
 }
 
 .item p{
@@ -79,6 +96,8 @@ p{
 }
 
 .item{
+    align-items: center;
+    justify-content: center;
     width: 210px;
     height: 210px;
 }

@@ -122,6 +122,13 @@ var settings = {
   
   $.ajax(settings).done(function (response) {
     console.log(response);
+
+    let header = document.createElement('h1')
+    let itemcat = document.createTextNode("All Items")
+    header.setAttribute("class", "itemheader")
+    header.appendChild(itemcat)
+    document.getElementById("inventory").appendChild(header)
+
     for (i = 0; i < response.length; i++){
        let item = document.createElement("div");
        item.setAttribute("class", "item")
@@ -145,6 +152,14 @@ var settings = {
     document.getElementById("submit").addEventListener("click", function(event) {
       event.preventDefault();
       document.querySelectorAll('.item').forEach(e => e.remove())
+
+      document.querySelectorAll('.itemheader').forEach(e => e.remove())
+
+      let header = document.createElement('h1')
+      let itemcat = document.createTextNode(document.getElementById("category").value)
+      header.setAttribute("class", "itemheader")
+      header.appendChild(itemcat)
+      document.getElementById("inventory").appendChild(header)
       for (i = 0; i < response.length; i++){
         if(document.getElementById("category").value == "All"){
           let item = document.createElement("div");

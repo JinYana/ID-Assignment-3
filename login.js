@@ -41,7 +41,7 @@ $(document).ready(function(){
                         $("#successAnimation").hide();
                         $("#mainAnimation").show();
                         $("#Log-in").trigger("reset");
-                        window.location.href = "index.html";
+                        window.location.href = "main.html";
                     }, 2000);
                 }
             });

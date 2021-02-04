@@ -1,138 +1,175 @@
 
 $(document).ready(function(){
 // Code for Iteminventory(to display items)
-  if ($("body").is("#mainPage")){
-    var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": "https://shopinventory-7a51.restdb.io/rest/items",
-        "method": "GET",
-        "headers": {
-          "content-type": "application/json",
-          "x-apikey": "6017c9516adfba69db8b6c31",
-          "cache-control": "no-cache"
-        }
+  
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://shopinventory-7a51.restdb.io/rest/items",
+  "method": "GET",
+  "headers": {
+    "content-type": "application/json",
+    "x-apikey": "6017c9516adfba69db8b6c31",
+    "cache-control": "no-cache"
+  }
+}
+  
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+    if ($("body").is("#mainPage")){let header = document.createElement('h1')
+      let itemcat = document.createTextNode("All Items")
+      header.setAttribute("class", "itemheader")
+      header.appendChild(itemcat)
+      document.getElementById("inventory").appendChild(header)
+
+    
+     for (i = 0; i < response.length; i++) {	
+        let item = document.createElement("a");	
+        item.setAttribute("href", "item.html")	
+        item.setAttribute("class", "item")
+       item.setAttribute("id", response[i].ItemID)
+
+       let title = document.createElement("p")	
+       let mybr = document.createElement('br');	
+       let img = document.createElement("img")	
+        
+        
+        
+       img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage	
+       img.setAttribute("width", "100px")	
+       img.setAttribute("height", "100px")	
+       let node = document.createTextNode(response[i].ItemName);	
+       let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))	
+        
+        
+        
+       item.appendChild(img)	
+       title.appendChild(node)	
+       title.appendChild(mybr)	
+       title.appendChild(number)	
+       item.appendChild(title)	
+        
+        
+        
+       document.getElementById("inventory").appendChild(item)
       }
-      
-      $.ajax(settings).done(function (response) {
-        console.log(response);
+
+     document.getElementById("submit").addEventListener("click", function(event) {
+        event.preventDefault();
+        document.querySelectorAll('.item').forEach(e => e.remove())
+        document.querySelectorAll('.itemheader').forEach(e => e.remove())
 
         let header = document.createElement('h1')
-        let itemcat = document.createTextNode("All Items")
+        let itemcat = document.createTextNode(document.getElementById("category").value)
         header.setAttribute("class", "itemheader")
         header.appendChild(itemcat)
         document.getElementById("inventory").appendChild(header)
+        for (i = 0; i < response.length; i++){
+          if(document.getElementById("category").value == "All"){
+            let item = document.createElement("a");
+            item.setAttribute("class", "item")
+            item.setAttribute("href", "item.html")
+            item.setAttribute("id", response[i].ItemID)
 
+            let title = document.createElement("p")
+            let mybr = document.createElement('br');
+            let img = document.createElement("img")
+            img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
+            img.setAttribute("width", "100px")
+            img.setAttribute("height", "100px")
+            let node = document.createTextNode(response[i].ItemName);
+            let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
+          
+
+
+            item.appendChild(img)
+            title.appendChild(node)
+            title.appendChild(mybr)
+            title.appendChild(number)
+            item.appendChild(title)
+            document.getElementById("inventory").appendChild(item)
+       
+          }
         
-        for (i = 0; i < response.length; i++) {	
-          let item = document.createElement("a");	
-          item.setAttribute("href", "#")	
-          item.setAttribute("class", "item")	
-          let title = document.createElement("p")	
-          let mybr = document.createElement('br');	
-          let img = document.createElement("img")	
+        
+          else if(document.getElementById("category").value == response[i].ItemCategory){
+            let item = document.createElement("a");
+            item.setAttribute("href", "item.html")
+            item.setAttribute("class", "item")
+            item.setAttribute("id", response[i].ItemID)
+            let title = document.createElement("p")
+            let mybr = document.createElement('br');
+            let img = document.createElement("img")
+            img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
+            img.setAttribute("width", "100px")
+            img.setAttribute("height", "100px")
+            let node = document.createTextNode(response[i].ItemName);
+            let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
+            item.appendChild(img)
+            title.appendChild(node)
+            title.appendChild(mybr)
+            title.appendChild(number)
+            item.appendChild(title)
             
-            
-            
-         img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage	
-         img.setAttribute("width", "100px")	
-         img.setAttribute("height", "100px")	
-         let node = document.createTextNode(response[i].ItemName);	
-         let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))	
-            
-            
-            
-         item.appendChild(img)	
-         title.appendChild(node)	
-         title.appendChild(mybr)	
-         title.appendChild(number)	
-         item.appendChild(title)	
-            
-            
-            
-         document.getElementById("inventory").appendChild(item)
+       
+       
+       
+            document.getElementById("inventory").appendChild(item)      
+          }
+        
+        
+         
         }
 
-        document.getElementById("submit").addEventListener("click", function(event) {
-          event.preventDefault();
-          document.querySelectorAll('.item').forEach(e => e.remove())
-          document.querySelectorAll('.itemheader').forEach(e => e.remove())
-    
-          let header = document.createElement('h1')
-          let itemcat = document.createTextNode(document.getElementById("category").value)
-          header.setAttribute("class", "itemheader")
-          header.appendChild(itemcat)
-          document.getElementById("inventory").appendChild(header)
-          for (i = 0; i < response.length; i++){
-            if(document.getElementById("category").value == "All"){
-              let item = document.createElement("div");
-              item.setAttribute("class", "item")
-              let title = document.createElement("p")
-              let mybr = document.createElement('br');
-              let img = document.createElement("img")
-              img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
-              img.setAttribute("width", "100px")
-              img.setAttribute("height", "100px")
-              let node = document.createTextNode(response[i].ItemName);
-              let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
-              
-    
-    
-              item.appendChild(img)
-              title.appendChild(node)
-              title.appendChild(mybr)
-              title.appendChild(number)
-              item.appendChild(title)
-              document.getElementById("inventory").appendChild(item)
-           
-           
-           
-           
-            }
-            
-            
-            else if(document.getElementById("category").value == response[i].ItemCategory){
-              let item = document.createElement("div");
-              item.setAttribute("class", "item")
-              let title = document.createElement("p")
-              let mybr = document.createElement('br');
-              let img = document.createElement("img")
-              img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
-              img.setAttribute("width", "100px")
-              img.setAttribute("height", "100px")
-              let node = document.createTextNode(response[i].ItemName);
-              let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
-              item.appendChild(img)
-              title.appendChild(node)
-              title.appendChild(mybr)
-              title.appendChild(number)
-              item.appendChild(title)
-           
-           
-           
-              document.getElementById("inventory").appendChild(item)      
-            }
-            
-            
-             
-          }
-    
-          
-           
-          
-          
-            
-          
-          
+
+      })
+
+      for (i = 0; i < response.length; i++){
+        document.getElementsByTagName("a")[i].addEventListener("click", function(event) {
+        localStorage.setItem("ItemID", this.id)
+        
+        
         })
-      
-      
+        
+      }
+    }
+    if($("body").is("#itemPage")){
+      for (i = 0; i < response.length; i++){
+        if(response[i].ItemID == localStorage.getItem("ItemID")){
 
-      
-    });
-  }
+          let title = document.createElement("H1")
+          let img = document.createElement("img")
+          img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
+          img.setAttribute("width", "400px")
+          img.setAttribute("height", "400px")
+          let price = document.createElement("h1")
+          let descheader = document.createElement("h3")
+          let itemdesc = document.createElement("h4")
 
-  else if ($("body").is("#loginPage")){
+          let itemname = document.createTextNode(response[i].ItemName)
+          let cost = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
+          let decription = document.createTextNode("Description")
+          let itemdescription = document.createTextNode(response[i].ItemDescription)
+
+          title.appendChild(itemname)
+          price.appendChild(cost)
+          descheader.appendChild(decription)
+          itemdesc.appendChild(itemdescription)
+          document.getElementById("bigitem").appendChild(title)
+          document.getElementById("bigitem").appendChild(img)
+          document.getElementById("bigitem").appendChild(price)
+          document.getElementById("bigitem").appendChild(descheader)
+          document.getElementById("bigitem").appendChild(itemdesc)
+          console.log(itemdescription)
+        }
+      }
+      
+    }
+  });
+
+
+
+  if ($("body").is("#loginPage")){
     $("#successAnimation").hide();
       $("#failAnimation").hide()
       $("#signupBlock").hide();

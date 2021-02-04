@@ -7,10 +7,20 @@
 
         <!-- Jquery -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@500&family=Quicksand&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Concert+One&family=Fredoka+One&display=swap" rel="stylesheet">
+
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        
     </head>
-
     <body>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -40,12 +50,32 @@
             </div>
         </nav>
         
+        <form>
+            <label for="catergory">Choose a Category:</label>
+            <select name="category" id= "category">
+             <option value="All">All</option>
+             <option value="Beverages">Beverages</option>
+             <option value="Electrical Appliances">Electrical Appliances</option>
+             <option value="Foods">Foods</option>
+             <option value="Fruits">Fruits</option>
+             <option value="Vegetables">Vegetables</option>
+             <option value="Snacks">Snacks</option>
+             <option value="Miscellaneous">Miscellaneous</option>
+            </select>
+            <br><br>
+            <input type="submit" value="Submit" id= "submit">
+        </form>
+        
+        <div class= "parent">
+            
+            <div id= "inventory">
+                
+
+           </div>
+        </div>
         
         
-        
-        
-        
-        <script src="script.js"></script>
+        <script src="main.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         

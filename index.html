@@ -1,90 +1,69 @@
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
-        <title>repl.it</title>
+        <title>GameMart</title>
         <link href="style.css" rel="stylesheet"/>
-
-        <!-- Jquery -->
-        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-
-        <!-- Google Fonts -->
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@500&family=Quicksand&display=swap" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Concert+One&family=Fredoka+One&display=swap" rel="stylesheet">
-
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     </head>
     <body>
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">GameMart</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Trivia</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">TPIR</a>
-                </li>
-                
-                
-              </ul>
-              <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form>
+        <header class="masthead">
+            <div class="container d-flex h-100 align-items-center">
+                <div class="mx-auto text-center">
+                    <h1 id="mainHeader"class="mx-auto my-0 w-50">GameMart!</h1>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5" style="color: bisque; font-family: Concert One, cursive;">Sign-up now and enhance your shopping experience!</h2>
+                </div>
             </div>
-        </nav>
-        
-        <form>
-            <label for="catergory">Choose a Category:</label>
-            <select name="category" id= "category">
-             <option value="All">All</option>
-             <option value="Beverages">Beverages</option>
-             <option value="Electrical Appliances">Electrical Appliances</option>
-             <option value="Foods">Foods</option>
-             <option value="Fruits">Fruits</option>
-             <option value="Vegetables">Vegetables</option>
-             <option value="Snacks">Snacks</option>
-             <option value="Miscellaneous">Miscellaneous</option>
-            </select>
-            <br><br>
-            <input type="submit" value="Submit" id= "submit">
-        </form>
-        
-        <div class= "parent">
-            
-            <div id= "inventory">
+        </header>
+        <section id ="mainBlock" class="align-items-center"> 
+            <form id="Log-in">
+                <lottie-player id="mainAnimation" src="https://assets10.lottiefiles.com/packages/lf20_O711lP.json"  
+                background="transparent" speed="1" class="mx-auto" style="width: 200px; height: 200px;"  loop  autoplay></lottie-player>
+                <lottie-player id="successAnimation" src="https://assets6.lottiefiles.com/temp/lf20_aYCCN4.json"  background="transparent"
+                speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player>
+                <lottie-player id="failAnimation" class="mx-auto" src="https://assets3.lottiefiles.com/packages/lf20_t5ulirqh.json" mode="bounce" 
+                background="transparent"  speed="0.9"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
                 
+                <h2 id= "log-intitle">Log In</h2>
+                <div class="form-group">
+                    <label for="username" class="text-white">Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="text-white">Password</label>
+                    <input type="text" class="form-control" id="password" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Log-in</button>
+            </form>
 
-           </div>
-        </div>
+            <p style="margin: auto; padding-top: 20px; width: 50%;" id="donthaveaccount">Don't have an account? <a style="color: grey;" id="startSignup">Sign up now!</a></p>
+        </section>
         
-        
-        <script src="script.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        
-        
-        
-        
-        
-        
-
+        <section id="signupBlock"> 
+            <form id="sign-up">  
+                <h2 id= "log-intitle">Sign Up</h2>
+                <p id="errMsg" style="margin: auto;"></p>
+                <div class="form-group">
+                    <label for="signupUser">Username</label>
+                    <input type="text" class="form-control" value="" id="signupUser" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassw">Password</label>
+                    <input type="text" class="form-control" id="signupPassw" placeholder="Enter password" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">E-mail</label>
+                    <input type="email" class="form-control" id="signupEmail" placeholder="Enter email" required>
+                </div>
+                <button type="submit" id="submitsignup"class="btn btn-primary">Sign up</button>
+            </form>
+        </section>
+        <script src="login.js"></script>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </body>
 </html>

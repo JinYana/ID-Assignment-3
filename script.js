@@ -23,26 +23,36 @@ $(document).ready(function(){
         header.appendChild(itemcat)
         document.getElementById("inventory").appendChild(header)
 
-        for (i = 0; i < response.length; i++){
-          let item = document.createElement("div");
-          item.setAttribute("class", "item")
-          let title = document.createElement("p")
-          let price = document.createElement("p")
-          let img = document.createElement("img")
-          img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
-          img.setAttribute("width", "100px")
-          img.setAttribute("height", "100px")
-          let node = document.createTextNode(response[i].ItemName);
-          let number = document.createTextNode(response[i].ItemPrice)
-          item.appendChild(img)
-          title.appendChild(node)
-          price.appendChild(number)
-          item.appendChild(title)
-          item.appendChild(price)
-          
-          document.getElementById("inventory").appendChild(item)
-          
+        
+        for (i = 0; i < response.length; i++) {	
+          let item = document.createElement("a");	
+          item.setAttribute("href", "#")	
+          item.setAttribute("class", "item")	
+          let title = document.createElement("p")	
+          let mybr = document.createElement('br');	
+          let img = document.createElement("img")	
+            
+            
+            
+         img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage	
+         img.setAttribute("width", "100px")	
+         img.setAttribute("height", "100px")	
+         let node = document.createTextNode(response[i].ItemName);	
+         let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))	
+            
+            
+            
+         item.appendChild(img)	
+         title.appendChild(node)	
+         title.appendChild(mybr)	
+         title.appendChild(number)	
+         item.appendChild(title)	
+            
+            
+            
+         document.getElementById("inventory").appendChild(item)
         }
+        
         document.getElementById("submit").addEventListener("click", function(event) {
           event.preventDefault();
           document.querySelectorAll('.item').forEach(e => e.remove())

@@ -52,13 +52,12 @@ $(document).ready(function(){
             
          document.getElementById("inventory").appendChild(item)
         }
-        
+
         document.getElementById("submit").addEventListener("click", function(event) {
           event.preventDefault();
           document.querySelectorAll('.item').forEach(e => e.remove())
-
           document.querySelectorAll('.itemheader').forEach(e => e.remove())
-
+    
           let header = document.createElement('h1')
           let itemcat = document.createTextNode(document.getElementById("category").value)
           header.setAttribute("class", "itemheader")
@@ -69,19 +68,26 @@ $(document).ready(function(){
               let item = document.createElement("div");
               item.setAttribute("class", "item")
               let title = document.createElement("p")
-              let price = document.createElement("p")
+              let mybr = document.createElement('br');
               let img = document.createElement("img")
               img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
               img.setAttribute("width", "100px")
               img.setAttribute("height", "100px")
               let node = document.createTextNode(response[i].ItemName);
-              let number = document.createTextNode("$" + response[i].ItemPrice)
+              let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
+              
+    
+    
               item.appendChild(img)
               title.appendChild(node)
-              price.appendChild(number)
+              title.appendChild(mybr)
+              title.appendChild(number)
               item.appendChild(title)
-              item.appendChild(price)
               document.getElementById("inventory").appendChild(item)
+           
+           
+           
+           
             }
             
             
@@ -89,25 +95,43 @@ $(document).ready(function(){
               let item = document.createElement("div");
               item.setAttribute("class", "item")
               let title = document.createElement("p")
-              let price = document.createElement("p")
+              let mybr = document.createElement('br');
               let img = document.createElement("img")
               img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
               img.setAttribute("width", "100px")
               img.setAttribute("height", "100px")
               let node = document.createTextNode(response[i].ItemName);
-              let number = document.createTextNode("$" + response[i].ItemPrice)
+              let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
               item.appendChild(img)
               title.appendChild(node)
-              price.appendChild(number)
+              title.appendChild(mybr)
+              title.appendChild(number)
               item.appendChild(title)
-              item.appendChild(price)
+           
+           
+           
+              document.getElementById("inventory").appendChild(item)      
+            }
             
-            document.getElementById("inventory").appendChild(item)      
-            }         
-          } 
+            
+             
+          }
+    
+          
+           
+          
+          
+            
+          
+          
         })
+      
+      
+
+      
     });
   }
+
   else if ($("body").is("#loginPage")){
     $("#successAnimation").hide();
       $("#failAnimation").hide()

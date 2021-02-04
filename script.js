@@ -3,6 +3,7 @@
 $(document).ready(function(){
 
     $("#successAnimation").hide();
+    $("#failAnimation").hide()
     $("#signupBlock").hide();
 
     $("#Log-in").submit(function(e){
@@ -37,6 +38,7 @@ $(document).ready(function(){
                     $("#successAnimation").show();
 
                     setTimeout(function (){
+                        $("#successAnimation").hide();
                         $("#mainAnimation").show();
                         $("#Log-in").trigger("reset");
                         window.location.href = "index.html";
@@ -46,6 +48,13 @@ $(document).ready(function(){
 
             if (found == false){
                 console.log("Account not found!");
+                $("#mainAnimation").hide();
+                $("#failAnimation").show();
+
+                setTimeout(function(){
+                  $("#failAnimation").hide(100);
+                  $("#mainAnimation").show(100);
+                }, 2000);
             }
         });
     })
@@ -64,7 +73,7 @@ $(document).ready(function(){
             "password": password,
             "email": email
         }
-        
+
         var settings = {
             "async": true,
             "crossDomain": true,
@@ -77,9 +86,11 @@ $(document).ready(function(){
             },
             "processData": false,
             "data": JSON.stringify(jsondata),
+            error: function(e){
+              console.log("ERROR: " + e.responseJSON.message);
+              $("#errMsg").text("Username already exists!");
+            },
             "beforeSend": function(){
-                //@TODO use loading bar instead
-                //disable our button or show loading bar
                 $("#submitsignup").prop("disabled", true);
             }
         }

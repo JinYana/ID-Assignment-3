@@ -112,7 +112,7 @@ var settings = {
             item.appendChild(title)
             
        
-       
+            
        
             document.getElementById("inventory").appendChild(item)      
           }
@@ -126,7 +126,8 @@ var settings = {
 
       for (i = 0; i < response.length; i++){
         document.getElementsByTagName("a")[i].addEventListener("click", function(event) {
-        localStorage.setItem("ItemID", this.id)
+        localStorage.setItem("ItemID", this.id);
+        
         
         
         })
@@ -142,7 +143,9 @@ var settings = {
           img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
           img.setAttribute("width", "400px")
           img.setAttribute("height", "400px")
+          
           let price = document.createElement("h1")
+          price.id = 'priceValue';
           let descheader = document.createElement("h3")
           let itemdesc = document.createElement("h4")
 
@@ -161,6 +164,9 @@ var settings = {
           document.getElementById("bigitem").appendChild(descheader)
           document.getElementById("bigitem").appendChild(itemdesc)
           console.log(itemdescription)
+
+          localStorage.setItem("ItemPrice", Number(response[i].ItemPrice).toFixed(2));
+          
         }
       }
       
@@ -275,9 +281,22 @@ var settings = {
       })
   }
   else if ($("body").is("#itemPage")){
+    $("#quantityPurchased").focusout(function(){
+      $("#subtotalCost").val("$"+ Number(localStorage.getItem("ItemPrice") * $("#quantityPurchased").val()).toFixed(2));
+      
+    });
 
+    $("#addToCart").submit(function(e){
+      e.preventDefault();
+      console.log(localStorage.getItem("ItemID"));
+      let cartItem = new CartItem(localStorage.getItem("ItemID"), $("#quantityPurchased").val(), localStorage.getItem("ItemPrice"));
+      console.log(cartItem);
+    })
   }
-
-
-
 })
+
+function CartItem(itemID, quantity, cost) {
+  this.itemID = itemID;
+  this.quantity = quantity;
+  this.cost = cost;
+}

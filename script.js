@@ -16,7 +16,11 @@ var settings = {
   
   $.ajax(settings).done(function (response) {
     console.log(response);
-    if ($("body").is("#mainPage")){let header = document.createElement('h1')
+    if ($("body").is("#mainPage")){
+      localStorage.removeItem("ItemID");
+      localStorage.removeItem("ItemPrice");
+      
+      let header = document.createElement('h1')
       let itemcat = document.createTextNode("All Items")
       header.setAttribute("class", "itemheader")
       header.appendChild(itemcat)
@@ -215,6 +219,8 @@ var settings = {
                           $("#successAnimation").hide();
                           $("#mainAnimation").show();
                           $("#Log-in").trigger("reset");
+                          let cartItemList = [];
+                          localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
                           window.location.href = "main.html";
                       }, 2000);
                   }
@@ -271,7 +277,9 @@ var settings = {
 
           $.ajax(settings).done(function(response){
               console.log("Successful creation of account!");
-              window.location.href = "index.html";              
+              let cartItemList = [];
+              localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
+              window.location.href = "main.html";              
           })
       })
 
@@ -290,7 +298,13 @@ var settings = {
       e.preventDefault();
       console.log(localStorage.getItem("ItemID"));
       let cartItem = new CartItem(localStorage.getItem("ItemID"), $("#quantityPurchased").val(), localStorage.getItem("ItemPrice"));
-      console.log(cartItem);
+      let cartList = JSON.parse(localStorage.getItem('cartItemList'));
+      cartList.push(cartItem);
+      localStorage.setItem('cartItemList', JSON.stringify(cartList));
+
+      setTimeout(function(){
+        window.location.href = 'main.html'
+      }, 1500)
     })
   }
 })

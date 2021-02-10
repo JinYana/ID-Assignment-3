@@ -336,7 +336,7 @@ if($("body").is("#trivaPage")){
     redirect: 'follow'
   };
 
-  fetch("https://opentdb.com/api.php?amount=10&encode=url3986", requestOptions)
+  fetch("https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986", requestOptions)
     .then(response => response.json())
     .then(result => {
       console.log(result)
@@ -375,6 +375,98 @@ if($("body").is("#trivaPage")){
       lable4.setAttribute("for", "opt4")
 
       
+      let randomise = Math.floor(Math.random() * 4)+ 1; 
+      
+      
+
+       
+      if(randomise == 1){
+        let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
+        lable1.appendChild(document.createTextNode(decodedanswer))
+        option1.setAttribute("class", "correctans")
+        for(i = 0; i < result.results[0].incorrect_answers.length; i++){
+          let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
+          console.log("hi")
+          console.log(decodeURI(result.results[0].incorrect_answers[i]))
+          let optionarray = [lable2, lable3, lable4]
+          optionarray[i].appendChild(document.createTextNode(decodedoption))
+
+        }
+        quiz.appendChild(lable1)
+        quiz.appendChild(option1)
+        quiz.appendChild(lable2)
+        quiz.appendChild(option2)
+        quiz.appendChild(lable3)
+        quiz.appendChild(option3)
+        quiz.appendChild(lable4)
+        quiz.appendChild(option4)
+        document.getElementById("quiz").appendChild(quiz)
+
+      }
+
+      else if(randomise == 2){
+        let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
+        lable2.appendChild(document.createTextNode(decodedanswer))
+        option2.setAttribute("class", "correctans")
+        for(i = 0; i < result.results[0].incorrect_answers.length; i++){
+          let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
+          let optionarray = [lable1, lable3, lable4]
+          optionarray[i].appendChild(document.createTextNode(decodedoption))
+
+        }
+        quiz.appendChild(lable1)
+        quiz.appendChild(option1)
+        quiz.appendChild(lable2)
+        quiz.appendChild(option2)
+        quiz.appendChild(lable3)
+        quiz.appendChild(option3)
+        quiz.appendChild(lable4)
+        quiz.appendChild(option4)
+        document.getElementById("quiz").appendChild(quiz)
+      }
+
+      else if(randomise == 3){
+        let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
+        lable3.appendChild(document.createTextNode(decodedanswer))
+        option3.setAttribute("class", "correctans")
+        for(i = 0; i < result.results[0].incorrect_answers.length; i++){
+          let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
+          
+          let optionarray = [lable1, lable2, lable4]
+          optionarray[i].appendChild(document.createTextNode(decodedoption))
+          
+        }
+        quiz.appendChild(lable1)
+        quiz.appendChild(option1)
+        quiz.appendChild(lable2)
+        quiz.appendChild(option2)
+        quiz.appendChild(lable3)
+        quiz.appendChild(option3)
+        quiz.appendChild(lable4)
+        quiz.appendChild(option4)
+        document.getElementById("quiz").appendChild(quiz)
+      }
+
+      else if(randomise == 4){
+        let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
+        lable4.appendChild(document.createTextNode(decodedanswer))
+        option4.setAttribute("class", "correctans")
+        for(i = 0; i < result.results[0].incorrect_answers.length; i++){
+          let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
+          let optionarray = [lable1, lable2, lable3]
+          optionarray[i].appendChild(document.createTextNode(decodedoption))
+
+        }
+        quiz.appendChild(lable1)
+        quiz.appendChild(option1)
+        quiz.appendChild(lable2)
+        quiz.appendChild(option2)
+        quiz.appendChild(lable3)
+        quiz.appendChild(option3)
+        quiz.appendChild(lable4)
+        quiz.appendChild(option4)
+        document.getElementById("quiz").appendChild(quiz)
+      }
     })
 
     

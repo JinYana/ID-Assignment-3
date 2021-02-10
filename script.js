@@ -16,7 +16,11 @@ var settings = {
   
   $.ajax(settings).done(function (response) {
     console.log(response);
-    if ($("body").is("#mainPage")){let header = document.createElement('h1')
+    if ($("body").is("#mainPage")){
+      localStorage.removeItem("ItemID");
+      localStorage.removeItem("ItemPrice");
+      
+      let header = document.createElement('h1')
       let itemcat = document.createTextNode("All Items")
       header.setAttribute("class", "itemheader")
       header.appendChild(itemcat)
@@ -123,7 +127,7 @@ var settings = {
             item.appendChild(title)
             
        
-       
+            
        
             document.getElementById("inventory").appendChild(item)     
             
@@ -157,6 +161,7 @@ var settings = {
           img.setAttribute("width", "300px")
           img.setAttribute("height", "300px")
           let price = document.createElement("h1")
+          price.id = 'priceValue';
           let descheader = document.createElement("h3")
           let itemdesc = document.createElement("h4")
 
@@ -175,6 +180,9 @@ var settings = {
           document.getElementById("bigitem").appendChild(descheader)
           document.getElementById("bigitem").appendChild(itemdesc)
           console.log(itemdescription)
+
+          localStorage.setItem("ItemPrice", Number(response[i].ItemPrice).toFixed(2));
+          
         }
       }
       
@@ -223,6 +231,8 @@ var settings = {
                           $("#successAnimation").hide();
                           $("#mainAnimation").show();
                           $("#Log-in").trigger("reset");
+                          let cartItemList = [];
+                          localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
                           window.location.href = "main.html";
                       }, 2000);
                   }
@@ -279,7 +289,9 @@ var settings = {
 
           $.ajax(settings).done(function(response){
               console.log("Successful creation of account!");
-              window.location.href = "index.html";              
+              let cartItemList = [];
+              localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
+              window.location.href = "main.html";              
           })
       })
 
@@ -289,9 +301,28 @@ var settings = {
       })
   }
   else if ($("body").is("#itemPage")){
+    $("#quantityPurchased").focusout(function(){
+      $("#subtotalCost").val("$"+ Number(localStorage.getItem("ItemPrice") * $("#quantityPurchased").val()).toFixed(2));
+      
+    });
 
+    $("#addToCart").submit(function(e){
+      e.preventDefault();
+      console.log(localStorage.getItem("ItemID"));
+      let cartItem = new CartItem(localStorage.getItem("ItemID"), $("#quantityPurchased").val(), localStorage.getItem("ItemPrice"));
+      let cartList = JSON.parse(localStorage.getItem('cartItemList'));
+      cartList.push(cartItem);
+      localStorage.setItem('cartItemList', JSON.stringify(cartList));
+
+      setTimeout(function(){
+        window.location.href = 'main.html'
+      }, 1500)
+    })
   }
-
-
-
 })
+
+function CartItem(itemID, quantity, cost) {
+  this.itemID = itemID;
+  this.quantity = quantity;
+  this.cost = cost;
+}

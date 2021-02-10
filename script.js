@@ -52,6 +52,15 @@ var settings = {
         
         
        document.getElementById("inventory").appendChild(item)
+       
+      }
+      for (i = 0; i < response.length; i++){
+        document.getElementsByTagName("a")[i].addEventListener("click", function(event) {
+        localStorage.setItem("ItemID", this.id)
+        alert("hi")
+        
+        })
+        
       }
 
      document.getElementById("submit").addEventListener("click", function(event) {
@@ -88,8 +97,10 @@ var settings = {
             title.appendChild(number)
             item.appendChild(title)
             document.getElementById("inventory").appendChild(item)
+            
        
           }
+          
         
         
           else if(document.getElementById("category").value == response[i].ItemCategory){
@@ -114,25 +125,28 @@ var settings = {
        
        
        
-            document.getElementById("inventory").appendChild(item)      
+            document.getElementById("inventory").appendChild(item)     
+            
           }
-        
-        
+          
+
          
         }
+        for (i = 0; i < response.length; i++){
+          document.getElementsByTagName("a")[i].addEventListener("click", function(event) {
+          localStorage.setItem("ItemID", this.id)
+          
+          
+          })
+          
+        } 
 
 
       })
 
-      for (i = 0; i < response.length; i++){
-        document.getElementsByTagName("a")[i].addEventListener("click", function(event) {
-        localStorage.setItem("ItemID", this.id)
-        
-        
-        })
-        
-      }
+      
     }
+    
     if($("body").is("#itemPage")){
       for (i = 0; i < response.length; i++){
         if(response[i].ItemID == localStorage.getItem("ItemID")){
@@ -140,8 +154,8 @@ var settings = {
           let title = document.createElement("H1")
           let img = document.createElement("img")
           img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
-          img.setAttribute("width", "400px")
-          img.setAttribute("height", "400px")
+          img.setAttribute("width", "300px")
+          img.setAttribute("height", "300px")
           let price = document.createElement("h1")
           let descheader = document.createElement("h3")
           let itemdesc = document.createElement("h4")

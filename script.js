@@ -61,7 +61,6 @@ var settings = {
       for (i = 0; i < response.length; i++){
         document.getElementsByTagName("a")[i].addEventListener("click", function(event) {
         localStorage.setItem("ItemID", this.id)
-        alert("hi")
         
         })
         
@@ -325,4 +324,59 @@ function CartItem(itemID, quantity, cost) {
   this.itemID = itemID;
   this.quantity = quantity;
   this.cost = cost;
+}
+
+if($("body").is("#trivaPage")){
+  var myHeaders = new Headers();
+  myHeaders.append("Cookie", "PHPSESSID=db0d6efdab67b239fecd4fa9109cb303");
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  fetch("https://opentdb.com/api.php?amount=10&encode=url3986", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+      let question = document.createElement('h1')
+      let decodedquestion = decodeURIComponent(result.results[0].question)
+      
+
+      question.appendChild(document.createTextNode(decodedquestion))
+
+      document.getElementById("quiz").appendChild(question)
+
+      let quiz = document.createElement("form")
+
+      let option1 = document.createElement("input")
+      option1.setAttribute("type", "radio")
+      option1.setAttribute("id", "opt1")
+      let lable1 = document.createElement("label")
+      lable1.setAttribute("for", "opt1")
+
+      let option2 = document.createElement("input")
+      option2.setAttribute("type", "radio")
+      option2.setAttribute("id", "opt2")
+      let lable2 = document.createElement("label")
+      lable2.setAttribute("for", "opt2")
+
+      let option3 = document.createElement("input")
+      option3.setAttribute("type", "radio")
+      option3.setAttribute("id", "opt3")
+      let lable3 = document.createElement("label")
+      lable3.setAttribute("for", "opt3")
+
+      let option4 = document.createElement("input")
+      option4.setAttribute("type", "radio")
+      option4.setAttribute("id", "opt4")
+      let lable4 = document.createElement("label")
+      lable4.setAttribute("for", "opt4")
+
+      
+    })
+
+    
+    
 }

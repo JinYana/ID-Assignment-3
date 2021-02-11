@@ -66,6 +66,10 @@ var settings = {
         
       }
 
+      $("#searchBar").submit(function(e){
+        e.preventDefault();
+      })
+
      document.getElementById("submit").addEventListener("click", function(event) {
         event.preventDefault();
         document.querySelectorAll('.item').forEach(e => e.remove())

@@ -190,6 +190,42 @@ var settings = {
       }
       
     }
+    else if ($("body").is("#checkoutPage")){
+      let cartList = JSON.parse(localStorage.getItem("cartItemList"));
+      
+      for (i=0; i<response.length; i++){
+        
+        cartList.forEach(x => {
+          if (parseInt(x.itemID) == response[i].ItemID){
+            let item = document.createElement("li");
+            item.setAttribute("class", "list-group-item d-flex justify-content-between lh-condensed");
+            item.setAttribute("id", response[i].ItemID);
+            let itemdiv = document.createElement("div");
+            let itemHeader = document.createElement("h6");
+            itemHeader.setAttribute("class", "my-0")
+            let itemText = document.createTextNode(response[i].ItemName);
+            itemHeader.appendChild(itemText);
+            let itemDesc = document.createElement("small");
+            itemDesc.setAttribute("class", "text-muted")
+            let descText = document.createTextNode(response[i].ItemDescription);
+            itemDesc.appendChild(descText);
+
+            itemdiv.appendChild(itemHeader);
+            itemdiv.appendChild(itemDesc);
+
+            let itemCost = document.createElement("span");
+            itemCost.setAttribute("class", "text-muted");
+            let costNode = document.createTextNode(x.cost);
+            itemCost.appendChild(costNode);
+          item.appendChild(itemdiv);
+          item.appendChild(itemCost);
+
+          document.getElementById("cart").appendChild(item);
+          $("#totalItems").text(cartList.length);
+          }
+        });
+      }
+    }
   });
 
 
@@ -311,12 +347,27 @@ var settings = {
 
     $("#addToCart").submit(function(e){
       e.preventDefault();
-      console.log(localStorage.getItem("ItemID"));
-      let cartItem = new CartItem(localStorage.getItem("ItemID"), $("#quantityPurchased").val(), localStorage.getItem("ItemPrice"));
+      
+      
       let cartList = JSON.parse(localStorage.getItem('cartItemList'));
-      cartList.push(cartItem);
-      localStorage.setItem('cartItemList', JSON.stringify(cartList));
+      let found = false;
+      cartList.forEach(element =>{
+        if (element.itemID == localStorage.getItem("ItemID")){
+          element.quantity = (parseFloat(element.quantity) + parseFloat($("#quantityPurchased").val())).toString();
+          element.cost = Number(parseFloat(element.quantity) * localStorage.getItem("ItemPrice")).toFixed(2);
+          found = true;
+        }
+      }
+      )
 
+      if (found == false){
+        let cartItem = new CartItem(localStorage.getItem("ItemID"),
+         $("#quantityPurchased").val(), Number(localStorage.getItem("ItemPrice") * $("#quantityPurchased").val()).toFixed(2));
+        cartList.push(cartItem);
+      }
+
+      localStorage.setItem('cartItemList', JSON.stringify(cartList));
+      
       setTimeout(function(){
         window.location.href = 'main.html'
       }, 1500)

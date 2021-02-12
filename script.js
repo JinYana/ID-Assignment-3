@@ -404,28 +404,33 @@ if($("body").is("#trivaPage")){
       document.getElementById("quiz").appendChild(question)
 
       let quiz = document.createElement("form")
+      quiz.setAttribute("id", "trivia")
 
       let option1 = document.createElement("input")
       option1.setAttribute("type", "radio")
       option1.setAttribute("id", "opt1")
+      option1.setAttribute("name", "trivia")
       let lable1 = document.createElement("label")
       lable1.setAttribute("for", "opt1")
 
       let option2 = document.createElement("input")
       option2.setAttribute("type", "radio")
       option2.setAttribute("id", "opt2")
+      option2.setAttribute("name", "trivia")
       let lable2 = document.createElement("label")
       lable2.setAttribute("for", "opt2")
 
       let option3 = document.createElement("input")
       option3.setAttribute("type", "radio")
       option3.setAttribute("id", "opt3")
+      option3.setAttribute("name", "trivia")
       let lable3 = document.createElement("label")
       lable3.setAttribute("for", "opt3")
 
       let option4 = document.createElement("input")
       option4.setAttribute("type", "radio")
       option4.setAttribute("id", "opt4")
+      option4.setAttribute("name", "trivia")
       let lable4 = document.createElement("label")
       lable4.setAttribute("for", "opt4")
 
@@ -439,6 +444,12 @@ if($("body").is("#trivaPage")){
         let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
         lable1.appendChild(document.createTextNode(decodedanswer))
         option1.setAttribute("class", "correctans")
+
+        let submitbutton = document.createElement("input")
+        submitbutton.setAttribute("type", "submit")
+        submitbutton.setAttribute("value", "submit")
+        submitbutton.setAttribute("id", "submitquiz")
+
         for(i = 0; i < result.results[0].incorrect_answers.length; i++){
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
           console.log("hi")
@@ -455,6 +466,7 @@ if($("body").is("#trivaPage")){
         quiz.appendChild(option3)
         quiz.appendChild(lable4)
         quiz.appendChild(option4)
+        quiz.appendChild(submitbutton)
         document.getElementById("quiz").appendChild(quiz)
 
       }
@@ -463,6 +475,12 @@ if($("body").is("#trivaPage")){
         let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
         lable2.appendChild(document.createTextNode(decodedanswer))
         option2.setAttribute("class", "correctans")
+
+        let submitbutton = document.createElement("input")
+        submitbutton.setAttribute("type", "submit")
+        submitbutton.setAttribute("value", "submit")
+        submitbutton.setAttribute("id", "submitquiz")
+
         for(i = 0; i < result.results[0].incorrect_answers.length; i++){
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
           let optionarray = [lable1, lable3, lable4]
@@ -477,6 +495,7 @@ if($("body").is("#trivaPage")){
         quiz.appendChild(option3)
         quiz.appendChild(lable4)
         quiz.appendChild(option4)
+        quiz.appendChild(submitbutton)
         document.getElementById("quiz").appendChild(quiz)
       }
 
@@ -484,6 +503,12 @@ if($("body").is("#trivaPage")){
         let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
         lable3.appendChild(document.createTextNode(decodedanswer))
         option3.setAttribute("class", "correctans")
+
+        let submitbutton = document.createElement("input")
+        submitbutton.setAttribute("type", "submit")
+        submitbutton.setAttribute("value", "submit")
+        submitbutton.setAttribute("id", "submitquiz")
+
         for(i = 0; i < result.results[0].incorrect_answers.length; i++){
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
           
@@ -499,6 +524,7 @@ if($("body").is("#trivaPage")){
         quiz.appendChild(option3)
         quiz.appendChild(lable4)
         quiz.appendChild(option4)
+        quiz.appendChild(submitbutton)
         document.getElementById("quiz").appendChild(quiz)
       }
 
@@ -506,6 +532,12 @@ if($("body").is("#trivaPage")){
         let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
         lable4.appendChild(document.createTextNode(decodedanswer))
         option4.setAttribute("class", "correctans")
+
+        let submitbutton = document.createElement("input")
+        submitbutton.setAttribute("type", "submit")
+        submitbutton.setAttribute("value", "submit")
+        submitbutton.setAttribute("id", "submitquiz")
+
         for(i = 0; i < result.results[0].incorrect_answers.length; i++){
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
           let optionarray = [lable1, lable2, lable3]
@@ -520,8 +552,40 @@ if($("body").is("#trivaPage")){
         quiz.appendChild(option3)
         quiz.appendChild(lable4)
         quiz.appendChild(option4)
+        quiz.appendChild(submitbutton)
         document.getElementById("quiz").appendChild(quiz)
       }
+
+      
+      
+
+      document.getElementById("submitquiz").addEventListener("click", function(event) {
+        event.preventDefault();
+        
+        
+        if(document.querySelector('input[name="trivia"]:checked').classList.contains("correctans")){
+          document.querySelectorAll('h1').forEach(e => e.remove())
+          document.querySelectorAll('#trivia').forEach(e => e.remove())
+          
+          let result = document.createElement('h1')
+          result.appendChild(document.createTextNode("Congrats!!! You have earned yourself 10% off your next purchase."))
+
+          document.getElementById("quiz").appendChild(result)
+        }
+        else{
+
+          document.querySelectorAll('h1').forEach(e => e.remove())
+          document.querySelectorAll('#trivia').forEach(e => e.remove())
+
+          let result = document.createElement('h1')
+          result.appendChild(document.createTextNode("Oh no!!! You answered the question incorrectly, Better luck next time!"))
+
+          document.getElementById("quiz").appendChild(result)
+
+        }
+      })
+
+      
     })
 
     

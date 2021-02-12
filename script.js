@@ -381,7 +381,7 @@ function CartItem(itemID, quantity, cost) {
   this.cost = cost;
 }
 
-if($("body").is("#trivaPage")){
+if($("body").is("#triviaPage")){
   var myHeaders = new Headers();
   myHeaders.append("Cookie", "PHPSESSID=db0d6efdab67b239fecd4fa9109cb303");
 

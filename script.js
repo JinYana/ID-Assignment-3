@@ -192,13 +192,16 @@ var settings = {
     }
     else if ($("body").is("#checkoutPage")){
       let cartList = JSON.parse(localStorage.getItem("cartItemList"));
+      if (cartList.length == 0){
+        console.log("hello");
+      }
       
       for (i=0; i<response.length; i++){
         
         cartList.forEach(x => {
           if (parseInt(x.itemID) == response[i].ItemID){
             let item = document.createElement("li");
-            item.setAttribute("class", "list-group-item d-flex justify-content-between lh-condensed");
+            item.setAttribute("class", "list-group-item d-flex flex-row lh-condensed");
             item.setAttribute("id", response[i].ItemID);
             let itemdiv = document.createElement("div");
             let itemHeader = document.createElement("h6");
@@ -206,19 +209,28 @@ var settings = {
             let itemText = document.createTextNode(response[i].ItemName);
             itemHeader.appendChild(itemText);
             let itemDesc = document.createElement("small");
-            itemDesc.setAttribute("class", "text-muted")
+            itemDesc.setAttribute("style", "width: 20px;");
+            itemDesc.setAttribute("class", "text-muted");
             let descText = document.createTextNode(response[i].ItemDescription);
             itemDesc.appendChild(descText);
+            let deleteButton = document.createElement("a");
+            deleteButton.setAttribute("role", "button");
+            deleteButton.setAttribute("href", "#");
+            deleteButton.setAttribute("class", "my-auto align-self-end")
+            let deleteText = document.createTextNode("Remove");
+            deleteButton.appendChild(deleteText);
 
             itemdiv.appendChild(itemHeader);
             itemdiv.appendChild(itemDesc);
+            
 
             let itemCost = document.createElement("span");
-            itemCost.setAttribute("class", "text-muted");
+            itemCost.setAttribute("class", "text-muted mx-3 my-auto");
             let costNode = document.createTextNode(x.cost);
             itemCost.appendChild(costNode);
           item.appendChild(itemdiv);
           item.appendChild(itemCost);
+          item.appendChild(deleteButton);
 
           document.getElementById("cart").appendChild(item);
           $("#totalItems").text(cartList.length);

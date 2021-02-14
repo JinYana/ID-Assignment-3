@@ -1,7 +1,9 @@
 
 $(document).ready(function(){
 // Code for Iteminventory(to display items)
-  
+$("#successAnimation").hide();
+$("#failAnimation").hide()
+$("#signupBlock").hide();
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -14,12 +16,12 @@ var settings = {
   }
 }
   
-  $.ajax(settings).done(function (response) {
+$.ajax(settings).done(function (response) {
     console.log(response);
     if ($("body").is("#mainPage")){
       localStorage.removeItem("ItemID");
       localStorage.removeItem("ItemPrice");
-      
+      //Code for deafault main page
       let header = document.createElement('h1')
       let itemcat = document.createTextNode("All Items")
       header.setAttribute("class", "itemheader")
@@ -58,6 +60,9 @@ var settings = {
        document.getElementById("inventory").appendChild(item)
        
       }
+      //End of code for deafult main page
+      
+      
       for (i = 0; i < response.length; i++){
         document.getElementsByTagName("a")[i].addEventListener("click", function(event) {
         localStorage.setItem("ItemID", this.id)
@@ -70,17 +75,23 @@ var settings = {
         e.preventDefault();
       })
 
-     document.getElementById("submit").addEventListener("click", function(event) {
+     //Code for sort by category function
+      document.getElementById("submit").addEventListener("click", function(event) {
         event.preventDefault();
-        document.querySelectorAll('.item').forEach(e => e.remove())
+        
+        document.querySelectorAll('.item').forEach(e => e.remove())//To clear the page
         document.querySelectorAll('.itemheader').forEach(e => e.remove())
 
+        //To Change the title to the item category chosen
         let header = document.createElement('h1')
         let itemcat = document.createTextNode(document.getElementById("category").value)
         header.setAttribute("class", "itemheader")
         header.appendChild(itemcat)
         document.getElementById("inventory").appendChild(header)
+
+        
         for (i = 0; i < response.length; i++){
+          //If user chooses All as the category
           if(document.getElementById("category").value == "All"){
             let item = document.createElement("a");
             item.setAttribute("class", "item")
@@ -139,9 +150,13 @@ var settings = {
 
          
         }
+        //End of code to display items in main page
+
+        
+        //Start of code to enlarge item
         for (i = 0; i < response.length; i++){
           document.getElementsByTagName("a")[i].addEventListener("click", function(event) {
-          localStorage.setItem("ItemID", this.id)
+          localStorage.setItem("ItemID", this.id)   //To keep track of which item was clicked by the user
           
           
           })
@@ -154,7 +169,7 @@ var settings = {
       
     }
     
-    if($("body").is("#itemPage")){
+    else if($("body").is("#itemPage")){
       for (i = 0; i < response.length; i++){
         if(response[i].ItemID == localStorage.getItem("ItemID")){
 
@@ -190,6 +205,10 @@ var settings = {
       }
       
     }
+    //End of code to enlarge item
+
+
+    
     else if ($("body").is("#checkoutPage")){
       let cartList = JSON.parse(localStorage.getItem("cartItemList"));
       if (cartList.length == 0){
@@ -240,116 +259,111 @@ var settings = {
     }
   });
 
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://accountdatabase-35b2.restdb.io/rest/account",
+    "method": "GET",
+    "headers": {
+      "content-type": "application/json",
+      "x-apikey": "6017b0836adfba69db8b6c22",
+      "cache-control": "no-cache"
+    }
+  }
 
-
-  if ($("body").is("#loginPage")){
-    $("#successAnimation").hide();
-      $("#failAnimation").hide()
-      $("#signupBlock").hide();
+  $.ajax(settings).done(function (response) {
+    if ($("body").is("#loginPage")){
+      
 
       $("#Log-in").submit(function(e){
-          e.preventDefault();
+        e.preventDefault();
 
-          
-          let username = $('#username').val();
-          let password = $('#password').val();
+        let username = $('#username').val();
+        let password = $('#password').val();
+        console.log(username);
+        console.log(password);
+        let found = false;
+        response.forEach(element => {
+          if (element.username == username && element.password == password){
+            console.log("Signing in...");
+            found=true;
+       
+            $("#mainAnimation").hide();
+            $("#successAnimation").show();
 
-          
-          var settings = {
-              "async": true,
-              "crossDomain": true,
-              "url": "https://accountdatabase-35b2.restdb.io/rest/account",
-              "method": "GET",
-              "headers": {
-                "content-type": "application/json",
-                "x-apikey": "6017b0836adfba69db8b6c22",
-                "cache-control": "no-cache"
-              }
-            }
-            
-            $.ajax(settings).done(function (response) {
-                let found = false;
-              response.forEach(element => {
-                  if (element.username == username && element.password == password){
-                      console.log("Signing in...");
-                      found=true;
-
-                      
-                      $("#mainAnimation").hide();
-                      $("#successAnimation").show();
-
-                      setTimeout(function (){
-                          $("#successAnimation").hide();
-                          $("#mainAnimation").show();
-                          $("#Log-in").trigger("reset");
-                          let cartItemList = [];
-                          localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
-                          window.location.href = "main.html";
-                      }, 2000);
-                  }
-              });
-
-              if (found == false){
-                  console.log("Account not found!");
-                  $("#mainAnimation").hide();
-                  $("#failAnimation").show();
-
-                  setTimeout(function(){
-                    $("#failAnimation").hide(100);
-                    $("#mainAnimation").show(100);
-                  }, 2000);
-              }
-          });
-      })
-
-      $("#sign-up").submit(function(e){
-          e.preventDefault();
-          console.log("hello");
-
-          
-          let username = $('#signupUser').val();
-          let password = $('#signupPassw').val();
-          let email = $('#signupEmail').val();
-          
-          var jsondata = {
-              "username": username,
-              "password": password,
-              "email": email
-          }
-
-          var settings = {
-              "async": true,
-              "crossDomain": true,
-              "url": "https://accountdatabase-35b2.restdb.io/rest/account",
-              "method": "POST",
-              "headers": {
-                "content-type": "application/json",
-                "x-apikey": "6017b0836adfba69db8b6c22",
-                "cache-control": "no-cache"
-              },
-              "processData": false,
-              "data": JSON.stringify(jsondata),
-              error: function(e){
-                console.log("ERROR: " + e.responseJSON.message);
-                $("#errMsg").text("Username already exists!");
-              },
-              "beforeSend": function(){
-                  $("#submitsignup").prop("disabled", true);
-              }
-          }
-
-          $.ajax(settings).done(function(response){
-              console.log("Successful creation of account!");
+            setTimeout(function (){
+              $("#successAnimation").hide();
+              $("#mainAnimation").show();
+              $("#Log-in").trigger("reset");
               let cartItemList = [];
               localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
-              window.location.href = "main.html";              
-          })
+              window.location.href = "main.html";
+            }, 2000);
+          }
+        })
+        
+        if (found == false){
+          console.log("Account not found!");
+          $("#mainAnimation").hide();
+          $("#failAnimation").show();
+
+          setTimeout(function(){
+            $("#failAnimation").hide(100);
+            $("#mainAnimation").show(100);
+          }, 2000);
+        }
+      
       })
 
       $("#startSignup").click(function(){
-          $("#mainBlock").hide();
-          $("#signupBlock").show();
+      $("#mainBlock").hide();
+      $("#signupBlock").show();
       })
+    
+    $("#sign-up").submit(function(e){
+      e.preventDefault();
+      console.log("hello");
+
+      
+      let username = $('#signupUser').val();
+      let password = $('#signupPassw').val();
+      let email = $('#signupEmail').val();
+      
+      var jsondata = {
+          "username": username,
+          "password": password,
+          "email": email
+      }
+
+      var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": "https://accountdatabase-35b2.restdb.io/rest/account",
+          "method": "POST",
+          "headers": {
+            "content-type": "application/json",
+            "x-apikey": "6017b0836adfba69db8b6c22",
+            "cache-control": "no-cache"
+          },
+          "processData": false,
+          "data": JSON.stringify(jsondata),
+          error: function(e){
+            console.log("ERROR: " + e.responseJSON.message);
+            $("#errMsg").text("Username already exists!");
+          },
+          "beforeSend": function(){
+              $("#submitsignup").prop("disabled", true);
+          }
+      }
+
+      $.ajax(settings).done(function(response){
+          console.log("Successful creation of account!");
+          let cartItemList = [];
+          localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
+          window.location.href = "main.html";              
+      })
+    })
+    
   }
   else if ($("body").is("#itemPage")){
     $("#quantityPurchased").focusout(function(){
@@ -385,14 +399,20 @@ var settings = {
       }, 1500)
     })
   }
+
+  // end of ajax
+  })
 })
 
+// Create CartItem constructor for CartItem object
 function CartItem(itemID, quantity, cost) {
   this.itemID = itemID;
   this.quantity = quantity;
   this.cost = cost;
 }
 
+
+//Start of code for triva function
 if($("body").is("#triviaPage")){
   var myHeaders = new Headers();
   myHeaders.append("Cookie", "PHPSESSID=db0d6efdab67b239fecd4fa9109cb303");
@@ -408,13 +428,14 @@ if($("body").is("#triviaPage")){
     .then(result => {
       console.log(result)
       let question = document.createElement('h1')
-      let decodedquestion = decodeURIComponent(result.results[0].question)
+      let decodedquestion = decodeURIComponent(result.results[0].question)// decoding the triva question from URL Encoding (RFC 3986)
       
 
       question.appendChild(document.createTextNode(decodedquestion))
 
       document.getElementById("quiz").appendChild(question)
-
+      
+      //Creating triva form
       let quiz = document.createElement("form")
       quiz.setAttribute("id", "trivia")
 
@@ -445,8 +466,9 @@ if($("body").is("#triviaPage")){
       option4.setAttribute("name", "trivia")
       let lable4 = document.createElement("label")
       lable4.setAttribute("for", "opt4")
+      //End of creating triva form
 
-      
+      //to randomise correct answer location
       let randomise = Math.floor(Math.random() * 4)+ 1; 
       
       
@@ -567,14 +589,15 @@ if($("body").is("#triviaPage")){
         quiz.appendChild(submitbutton)
         document.getElementById("quiz").appendChild(quiz)
       }
+      // End of randomising correct ans location
 
       
       
-
+      
       document.getElementById("submitquiz").addEventListener("click", function(event) {
         event.preventDefault();
         
-        
+        // Code for what actions to take when user answers question correctly
         if(document.querySelector('input[name="trivia"]:checked').classList.contains("correctans")){
           document.querySelectorAll('h1').forEach(e => e.remove())
           document.querySelectorAll('#trivia').forEach(e => e.remove())
@@ -584,6 +607,8 @@ if($("body").is("#triviaPage")){
 
           document.getElementById("quiz").appendChild(result)
         }
+
+        // Code for what actions to take when user answers question wrongly
         else{
 
           document.querySelectorAll('h1').forEach(e => e.remove())
@@ -599,7 +624,5 @@ if($("body").is("#triviaPage")){
 
       
     })
-
-    
-    
 }
+//End of code for triva function

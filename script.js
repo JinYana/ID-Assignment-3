@@ -2,8 +2,9 @@
 $(document).ready(function(){
 // Code for Iteminventory(to display items)
 $("#successAnimation").hide();
-$("#failAnimation").hide()
+$("#failAnimation").hide();
 $("#signupBlock").hide();
+$("#tpirStart").hide();
 
 
 var settings = {
@@ -285,6 +286,20 @@ $.ajax(settings).done(function (response) {
           });
         }
       }
+    }
+    else if ($("body").is("#tpirPage")){
+      $("#tpirLoad").hide();
+      $("#tpirStart").show();
+      $("#tpirStartButton").click(function(){
+        $("#tpirStart").hide(200);
+        let randomItemID = (Math.floor(Math.random() * 28) + 1);
+        for (i = 0; i < response.length; i++){
+          if (response[i].ItemID == randomItemID){
+            let selectedItem = response[i];
+            console.log(selectedItem.ItemName);
+          }
+        }
+      })
     }
   });
 
@@ -657,8 +672,4 @@ if($("body").is("#triviaPage")){
     })
 }
 //End of code for triva function
-else if($("body").is("#tpirPage")){
-  $("#tpirStartButton").click(function(){
-    $("#tpirStart").hide(200);
-  })
-}
+

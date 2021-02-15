@@ -657,3 +657,8 @@ if($("body").is("#triviaPage")){
     })
 }
 //End of code for triva function
+else if($("body").is("#tpirPage")){
+  $("#tpirStartButton").click(function(){
+    $("#tpirStart").hide(200);
+  })
+}

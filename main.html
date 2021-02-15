@@ -54,33 +54,35 @@
               </a>
             </div>
         </nav>
-        
-        <form>
-            <label for="catergory">Choose a Category:</label>
-            <select name="category" id= "category">
-             <option value="All">All</option>
-             <option value="Beverages">Beverages</option>
-             <option value="Electrical Appliances">Electrical Appliances</option>
-             <option value="Foods">Foods</option>
-             <option value="Fruits">Fruits</option>
-             <option value="Vegetables">Vegetables</option>
-             <option value="Snacks">Snacks</option>
-             <option value="Miscellaneous">Miscellaneous</option>
-            </select>
-            <br><br>
-            <input type="submit" value="Submit" id= "submit">
-        </form>
-        
-        <div class= "parent">
-            
+        <div class="d-flex flex-column mb-3 flex-wrap">
+          <form class="p-2 mx-auto">
+              <label for="catergory">Choose a Category:</label>
+              <select name="category" id= "category">
+              <option value="All">All</option>
+              <option value="Beverages">Beverages</option>
+              <option value="Electrical Appliances">Electrical Appliances</option>
+              <option value="Foods">Foods</option>
+              <option value="Fruits">Fruits</option>
+              <option value="Vegetables">Vegetables</option>
+              <option value="Snacks">Snacks</option>
+              <option value="Miscellaneous">Miscellaneous</option>
+              </select>
+              <br><br>
+              <input type="submit" value="Submit" id= "submit">
+          </form>
+          <div class="p-2 mx-auto" id="mainLoad">
+            <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_IelcBP.json"  
+            background="transparent"  speed="1.5"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
+          </div>
+          <div class= "parent p-2">          
             <div id= "inventory">
-                
-
-           </div>
+                  <!--Items are added using JavaScript, received from RestDB-->
+            </div>
+          </div>
         </div>
         
-        
         <script src="script.js"></script>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         

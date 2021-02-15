@@ -22,6 +22,7 @@ var settings = {
 $.ajax(settings).done(function (response) {
     console.log(response);
     if ($("body").is("#mainPage")){
+      $("#mainLoad").hide();
       localStorage.removeItem("ItemID");
       localStorage.removeItem("ItemPrice");
       //Code for deafault main page
@@ -213,8 +214,11 @@ $.ajax(settings).done(function (response) {
 
     
     else if ($("body").is("#checkoutPage")){
+      
       let cartList = JSON.parse(localStorage.getItem("cartItemList"));
+
       if (cartList.length == 0){
+        $("#cartLoad").hide();
         $("#totalItems").text(cartList.length);
 
         let item = document.createElement("li");
@@ -283,7 +287,8 @@ $.ajax(settings).done(function (response) {
 
               
             }
-          });
+          })
+          $("#cartLoad").hide();
         }
       }
     }

@@ -4,6 +4,8 @@ $(document).ready(function(){
 $("#successAnimation").hide();
 $("#failAnimation").hide()
 $("#signupBlock").hide();
+
+
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -212,52 +214,81 @@ $.ajax(settings).done(function (response) {
     else if ($("body").is("#checkoutPage")){
       let cartList = JSON.parse(localStorage.getItem("cartItemList"));
       if (cartList.length == 0){
-        console.log("hello");
-      }
-      
-      for (i=0; i<response.length; i++){
+        $("#totalItems").text(cartList.length);
+
+        let item = document.createElement("li");
+        item.setAttribute("class", "list-group-item justify-content-between d-flex flex-row lh-condensed");
+        let itemdiv = document.createElement("div");
         
-        cartList.forEach(x => {
-          if (parseInt(x.itemID) == response[i].ItemID){
-            let item = document.createElement("li");
-            item.setAttribute("class", "list-group-item d-flex flex-row lh-condensed");
-            item.setAttribute("id", response[i].ItemID);
-            let itemdiv = document.createElement("div");
-            let itemHeader = document.createElement("h6");
-            itemHeader.setAttribute("class", "my-0")
-            let itemText = document.createTextNode(response[i].ItemName + " ×" + x.quantity);
-            itemHeader.appendChild(itemText);
-            let itemDesc = document.createElement("small");
-            itemDesc.setAttribute("style", "width: 20px;");
-            itemDesc.setAttribute("class", "text-muted");
-            let descText = document.createTextNode(response[i].ItemDescription);
-            itemDesc.appendChild(descText);
-            let deleteButton = document.createElement("a");
-            deleteButton.setAttribute("role", "button");
-            deleteButton.setAttribute("href", "#");
-            deleteButton.setAttribute("class", "my-auto align-self-end")
-            let deleteText = document.createTextNode("Remove");
-            deleteButton.appendChild(deleteText);
+        let itemHeader = document.createElement("h6");
+        itemHeader.setAttribute("class", "my-0");
+        let itemText = document.createTextNode("There are currently no items in your cart!");
+        itemHeader.appendChild(itemText);
+        
 
-            itemdiv.appendChild(itemHeader);
-            itemdiv.appendChild(itemDesc);
-            
+        itemdiv.appendChild(itemHeader);
+        
+        item.appendChild(itemdiv);
+        
 
-            let itemCost = document.createElement("span");
-            itemCost.setAttribute("class", "text-muted mx-3 my-auto");
-            let costNode = document.createTextNode(x.cost);
-            itemCost.appendChild(costNode);
-          item.appendChild(itemdiv);
-          item.appendChild(itemCost);
-          item.appendChild(deleteButton);
+        document.getElementById("cart").appendChild(item);
+      }
+      else{
+        const cartNode = document.getElementById("cart");
+        while (cartNode.lastElementChild){
+          cartNode.removeChild(cartNode.lastElementChild);
+        }
+        for (i=0; i<response.length; i++){
+          
+          cartList.forEach(x => {
+            if (parseInt(x.itemID) == response[i].ItemID){
+              let item = document.createElement("li");
+              item.setAttribute("class", "list-group-item justify-content-between d-flex flex-row lh-condensed");
+              
+              let itemdiv = document.createElement("div");
+              itemdiv.setAttribute("style", "max-width: 150px;")
+              let itemHeader = document.createElement("h6");
+              itemHeader.setAttribute("class", "my-0");
+              let itemText = document.createTextNode(response[i].ItemName + " ×" + x.quantity);
+              itemHeader.appendChild(itemText);
+              let itemDesc = document.createElement("small");
+              itemDesc.setAttribute("class", "text-muted");
+              let descText = document.createTextNode(response[i].ItemDescription);
+              itemDesc.appendChild(descText);
+              let deleteButton = document.createElement("a");
+              deleteButton.setAttribute("role", "button");
+              deleteButton.setAttribute("id", response[i].ItemID);
+              deleteButton.setAttribute("href", "#");
+              deleteButton.setAttribute("onClick",
+              "(function(){console.log('Deleting item with id: ' + id); let cartList= JSON.parse(localStorage.getItem('cartItemList')); for (var i = cartList.length -1; i>=0; i--){if (cartList[i].itemID == id){cartList.splice(i, 1); } } localStorage.setItem('cartItemList', JSON.stringify(cartList)); location.reload();})()");
+              deleteButton.setAttribute("class", "my-auto align-self-end")
+              let deleteText = document.createTextNode("Remove");
+              deleteButton.appendChild(deleteText);
 
-          document.getElementById("cart").appendChild(item);
-          $("#totalItems").text(cartList.length);
-          }
-        });
+              itemdiv.appendChild(itemHeader);
+              itemdiv.appendChild(itemDesc);
+              
+
+              let itemCost = document.createElement("span");
+              itemCost.setAttribute("class", "text-muted mx-3 my-auto");
+              let costNode = document.createTextNode(x.cost);
+              itemCost.appendChild(costNode);
+              item.appendChild(itemdiv);
+              item.appendChild(itemCost);
+              item.appendChild(deleteButton);
+
+              document.getElementById("cart").appendChild(item);
+              $("#totalItems").text(cartList.length);
+
+              
+            }
+          });
+        }
       }
     }
   });
+
+  
 
   var settings = {
     "async": true,

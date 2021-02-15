@@ -1,314 +1,311 @@
 
-$(document).ready(function(){
-// Code for Iteminventory(to display items)
-$("#successAnimation").hide();
-$("#failAnimation").hide();
-$("#signupBlock").hide();
-$("#tpirStart").hide();
+$(document).ready(function () {
+  // Code for Iteminventory(to display items)
+  $("#successAnimation").hide();
+  $("#failAnimation").hide();
+  $("#signupBlock").hide();
+  $("#tpirStart").hide();
 
 
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "https://shopinventory-7a51.restdb.io/rest/items",
-  "method": "GET",
-  "headers": {
-    "content-type": "application/json",
-    "x-apikey": "6017c9516adfba69db8b6c31",
-    "cache-control": "no-cache"
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://shopinventory-7a51.restdb.io/rest/items",
+    "method": "GET",
+    "headers": {
+      "content-type": "application/json",
+      "x-apikey": "6017c9516adfba69db8b6c31",
+      "cache-control": "no-cache"
+    }
   }
-}
-  
-$.ajax(settings).done(function (response) {
-    console.log(response);
-    if ($("body").is("#mainPage")){
-      $("#mainLoad").hide();
-      localStorage.removeItem("ItemID");
-      localStorage.removeItem("ItemPrice");
-      //Code for deafault main page
-      let header = document.createElement('h1')
-      let itemcat = document.createTextNode("All Items")
-      header.setAttribute("class", "itemheader")
-      header.appendChild(itemcat)
-      document.getElementById("inventory").appendChild(header)
 
-    
-     for (i = 0; i < response.length; i++) {	
-        let item = document.createElement("a");	
-        item.setAttribute("href", "item.html")	
-        item.setAttribute("class", "item")
-       item.setAttribute("id", response[i].ItemID)
-
-       let title = document.createElement("p")	
-       let mybr = document.createElement('br');	
-       let img = document.createElement("img")	
-        
-        
-        
-       img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage	
-       img.setAttribute("width", "100px")	
-       img.setAttribute("height", "100px")	
-       let node = document.createTextNode(response[i].ItemName);	
-       let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))	
-        
-        
-        
-       item.appendChild(img)	
-       title.appendChild(node)	
-       title.appendChild(mybr)	
-       title.appendChild(number)	
-       item.appendChild(title)	
-        
-        
-        
-       document.getElementById("inventory").appendChild(item)
-       
-      }
-      //End of code for deafult main page
-      
-      
-      for (i = 0; i < response.length; i++){
-        document.getElementsByTagName("a")[i].addEventListener("click", function(event) {
-        localStorage.setItem("ItemID", this.id)
-        
-        })
-        
-      }
-
-      $("#searchBar").submit(function(e){
-        e.preventDefault();
-      })
-
-     //Code for sort by category function
-      document.getElementById("submit").addEventListener("click", function(event) {
-        event.preventDefault();
-        
-        document.querySelectorAll('.item').forEach(e => e.remove())//To clear the page
-        document.querySelectorAll('.itemheader').forEach(e => e.remove())
-
-        //To Change the title to the item category chosen
+  if ($("body").is("#mainPage") || $("body").is("#itemPage") || $("body").is("#checkoutPage")) {
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+      if ($("body").is("#mainPage")) {
+        $("#mainLoad").hide();
+        localStorage.removeItem("ItemID");
+        localStorage.removeItem("ItemPrice");
+        //Code for deafault main page
         let header = document.createElement('h1')
-        let itemcat = document.createTextNode(document.getElementById("category").value)
+        let itemcat = document.createTextNode("All Items")
         header.setAttribute("class", "itemheader")
         header.appendChild(itemcat)
         document.getElementById("inventory").appendChild(header)
 
-        
-        for (i = 0; i < response.length; i++){
-          //If user chooses All as the category
-          if(document.getElementById("category").value == "All"){
-            let item = document.createElement("a");
-            item.setAttribute("class", "item")
-            item.setAttribute("href", "item.html")
-            item.setAttribute("id", response[i].ItemID)
 
-            let title = document.createElement("p")
-            let mybr = document.createElement('br');
-            let img = document.createElement("img")
-            img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
-            img.setAttribute("width", "100px")
-            img.setAttribute("height", "100px")
-            let node = document.createTextNode(response[i].ItemName);
-            let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
-          
+        for (i = 0; i < response.length; i++) {
+          let item = document.createElement("a");
+          item.setAttribute("href", "item.html")
+          item.setAttribute("class", "item")
+          item.setAttribute("id", response[i].ItemID)
 
-
-            item.appendChild(img)
-            title.appendChild(node)
-            title.appendChild(mybr)
-            title.appendChild(number)
-            item.appendChild(title)
-            document.getElementById("inventory").appendChild(item)
-            
-       
-          }
-          
-        
-        
-          else if(document.getElementById("category").value == response[i].ItemCategory){
-            let item = document.createElement("a");
-            item.setAttribute("href", "item.html")
-            item.setAttribute("class", "item")
-            item.setAttribute("id", response[i].ItemID)
-            let title = document.createElement("p")
-            let mybr = document.createElement('br');
-            let img = document.createElement("img")
-            img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
-            img.setAttribute("width", "100px")
-            img.setAttribute("height", "100px")
-            let node = document.createTextNode(response[i].ItemName);
-            let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
-            item.appendChild(img)
-            title.appendChild(node)
-            title.appendChild(mybr)
-            title.appendChild(number)
-            item.appendChild(title)
-            
-       
-            
-       
-            document.getElementById("inventory").appendChild(item)     
-            
-          }
-          
-
-         
-        }
-        //End of code to display items in main page
-
-        
-        //Start of code to enlarge item
-        for (i = 0; i < response.length; i++){
-          document.getElementsByTagName("a")[i].addEventListener("click", function(event) {
-          localStorage.setItem("ItemID", this.id)   //To keep track of which item was clicked by the user
-          
-          
-          })
-          
-        } 
-
-
-      })
-
-      
-    }
-    
-    else if($("body").is("#itemPage")){
-      for (i = 0; i < response.length; i++){
-        if(response[i].ItemID == localStorage.getItem("ItemID")){
-
-          let title = document.createElement("H1")
+          let title = document.createElement("p")
+          let mybr = document.createElement('br');
           let img = document.createElement("img")
+
+
+
           img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
-          img.setAttribute("width", "300px")
-          img.setAttribute("height", "300px")
-          let price = document.createElement("h1")
-          price.id = 'priceValue';
-          let descheader = document.createElement("h3")
-          let itemdesc = document.createElement("h4")
+          img.setAttribute("width", "100px")
+          img.setAttribute("height", "100px")
+          let node = document.createTextNode(response[i].ItemName);
+          let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
 
-          let itemname = document.createTextNode(response[i].ItemName)
-          let cost = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
-          let decription = document.createTextNode("Description")
-          let itemdescription = document.createTextNode(response[i].ItemDescription)
 
-          title.appendChild(itemname)
-          price.appendChild(cost)
-          descheader.appendChild(decription)
-          itemdesc.appendChild(itemdescription)
-          document.getElementById("bigitem").appendChild(title)
-          document.getElementById("bigitem").appendChild(img)
-          document.getElementById("bigitem").appendChild(price)
-          document.getElementById("bigitem").appendChild(descheader)
-          document.getElementById("bigitem").appendChild(itemdesc)
-          console.log(itemdescription)
 
-          localStorage.setItem("ItemPrice", Number(response[i].ItemPrice).toFixed(2));
-          
+          item.appendChild(img)
+          title.appendChild(node)
+          title.appendChild(mybr)
+          title.appendChild(number)
+          item.appendChild(title)
+
+
+
+          document.getElementById("inventory").appendChild(item)
+
         }
-      }
-      
-    }
-    //End of code to enlarge item
+        //End of code for deafult main page
 
 
-    
-    else if ($("body").is("#checkoutPage")){
-      
-      let cartList = JSON.parse(localStorage.getItem("cartItemList"));
-
-      if (cartList.length == 0){
-        $("#cartLoad").hide();
-        $("#totalItems").text(cartList.length);
-
-        let item = document.createElement("li");
-        item.setAttribute("class", "list-group-item justify-content-between d-flex flex-row lh-condensed");
-        let itemdiv = document.createElement("div");
-        
-        let itemHeader = document.createElement("h6");
-        itemHeader.setAttribute("class", "my-0");
-        let itemText = document.createTextNode("There are currently no items in your cart!");
-        itemHeader.appendChild(itemText);
-        
-
-        itemdiv.appendChild(itemHeader);
-        
-        item.appendChild(itemdiv);
-        
-
-        document.getElementById("cart").appendChild(item);
-      }
-      else{
-        const cartNode = document.getElementById("cart");
-        while (cartNode.lastElementChild){
-          cartNode.removeChild(cartNode.lastElementChild);
-        }
-        for (i=0; i<response.length; i++){
-          
-          cartList.forEach(x => {
-            if (parseInt(x.itemID) == response[i].ItemID){
-              let item = document.createElement("li");
-              item.setAttribute("class", "list-group-item justify-content-between d-flex flex-row lh-condensed");
-              
-              let itemdiv = document.createElement("div");
-              itemdiv.setAttribute("style", "max-width: 150px;")
-              let itemHeader = document.createElement("h6");
-              itemHeader.setAttribute("class", "my-0");
-              let itemText = document.createTextNode(response[i].ItemName + " ×" + x.quantity);
-              itemHeader.appendChild(itemText);
-              let itemDesc = document.createElement("small");
-              itemDesc.setAttribute("class", "text-muted");
-              let descText = document.createTextNode(response[i].ItemDescription);
-              itemDesc.appendChild(descText);
-              let deleteButton = document.createElement("a");
-              deleteButton.setAttribute("role", "button");
-              deleteButton.setAttribute("id", response[i].ItemID);
-              deleteButton.setAttribute("href", "#");
-              deleteButton.setAttribute("onClick",
-              "(function(){console.log('Deleting item with id: ' + id); let cartList= JSON.parse(localStorage.getItem('cartItemList')); for (var i = cartList.length -1; i>=0; i--){if (cartList[i].itemID == id){cartList.splice(i, 1); } } localStorage.setItem('cartItemList', JSON.stringify(cartList)); location.reload();})()");
-              deleteButton.setAttribute("class", "my-auto align-self-end")
-              let deleteText = document.createTextNode("Remove");
-              deleteButton.appendChild(deleteText);
-
-              itemdiv.appendChild(itemHeader);
-              itemdiv.appendChild(itemDesc);
-              
-
-              let itemCost = document.createElement("span");
-              itemCost.setAttribute("class", "text-muted mx-3 my-auto");
-              let costNode = document.createTextNode(x.cost);
-              itemCost.appendChild(costNode);
-              item.appendChild(itemdiv);
-              item.appendChild(itemCost);
-              item.appendChild(deleteButton);
-
-              document.getElementById("cart").appendChild(item);
-              $("#totalItems").text(cartList.length);
-
-              
-            }
+        for (i = 0; i < response.length; i++) {
+          document.getElementsByTagName("a")[i].addEventListener("click", function (event) {
+            localStorage.setItem("ItemID", this.id)
           })
-          $("#cartLoad").hide();
+
         }
+
+        $("#searchBar").submit(function (e) {
+          e.preventDefault();
+        })
+
+        //Code for sort by category function
+        document.getElementById("submit").addEventListener("click", function (event) {
+          event.preventDefault();
+
+          document.querySelectorAll('.item').forEach(e => e.remove())//To clear the page
+          document.querySelectorAll('.itemheader').forEach(e => e.remove())
+
+          //To Change the title to the item category chosen
+          let header = document.createElement('h1')
+          let itemcat = document.createTextNode(document.getElementById("category").value)
+          header.setAttribute("class", "itemheader")
+          header.appendChild(itemcat)
+          document.getElementById("inventory").appendChild(header)
+
+
+          for (i = 0; i < response.length; i++) {
+            //If user chooses All as the category
+            if (document.getElementById("category").value == "All") {
+              let item = document.createElement("a");
+              item.setAttribute("class", "item")
+              item.setAttribute("href", "item.html")
+              item.setAttribute("id", response[i].ItemID)
+
+              let title = document.createElement("p")
+              let mybr = document.createElement('br');
+              let img = document.createElement("img")
+              img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
+              img.setAttribute("width", "100px")
+              img.setAttribute("height", "100px")
+              let node = document.createTextNode(response[i].ItemName);
+              let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
+
+
+
+              item.appendChild(img)
+              title.appendChild(node)
+              title.appendChild(mybr)
+              title.appendChild(number)
+              item.appendChild(title)
+              document.getElementById("inventory").appendChild(item)
+
+
+            }
+
+
+
+            else if (document.getElementById("category").value == response[i].ItemCategory) {
+              let item = document.createElement("a");
+              item.setAttribute("href", "item.html")
+              item.setAttribute("class", "item")
+              item.setAttribute("id", response[i].ItemID)
+              let title = document.createElement("p")
+              let mybr = document.createElement('br');
+              let img = document.createElement("img")
+              img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
+              img.setAttribute("width", "100px")
+              img.setAttribute("height", "100px")
+              let node = document.createTextNode(response[i].ItemName);
+              let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
+              item.appendChild(img)
+              title.appendChild(node)
+              title.appendChild(mybr)
+              title.appendChild(number)
+              item.appendChild(title)
+
+
+
+
+              document.getElementById("inventory").appendChild(item)
+
+            }
+
+
+
+          }
+          //End of code to display items in main page
+
+
+          //Start of code to enlarge item
+          for (i = 0; i < response.length; i++) {
+            document.getElementsByTagName("a")[i].addEventListener("click", function (event) {
+              localStorage.setItem("ItemID", this.id)
+            })//To keep track of which item was clicked by the user
+
+          }
+        })
+
       }
-    }
-    else if ($("body").is("#tpirPage")){
-      $("#tpirLoad").hide();
-      $("#tpirStart").show();
-      $("#tpirStartButton").click(function(){
-        $("#tpirStart").hide(200);
-        let randomItemID = (Math.floor(Math.random() * 28) + 1);
-        for (i = 0; i < response.length; i++){
-          if (response[i].ItemID == randomItemID){
-            let selectedItem = response[i];
-            console.log(selectedItem.ItemName);
+
+      else if ($("body").is("#itemPage")) {
+        for (i = 0; i < response.length; i++) {
+          if (response[i].ItemID == localStorage.getItem("ItemID")) {
+            let title = document.createElement("H1")
+            let img = document.createElement("img")
+            img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
+            img.setAttribute("width", "300px")
+            img.setAttribute("height", "300px")
+            let price = document.createElement("h1")
+            price.id = 'priceValue';
+            let descheader = document.createElement("h3")
+            let itemdesc = document.createElement("h4")
+
+            let itemname = document.createTextNode(response[i].ItemName)
+            let cost = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
+            let decription = document.createTextNode("Description")
+            let itemdescription = document.createTextNode(response[i].ItemDescription)
+
+            title.appendChild(itemname)
+            price.appendChild(cost)
+            descheader.appendChild(decription)
+            itemdesc.appendChild(itemdescription)
+            document.getElementById("bigitem").appendChild(title)
+            document.getElementById("bigitem").appendChild(img)
+            document.getElementById("bigitem").appendChild(price)
+            document.getElementById("bigitem").appendChild(descheader)
+            document.getElementById("bigitem").appendChild(itemdesc)
+            console.log(itemdescription)
+
+            localStorage.setItem("ItemPrice", Number(response[i].ItemPrice).toFixed(2));
+
           }
         }
-      })
-    }
-  });
 
-  
+      }
+      //End of code to enlarge item
+
+
+
+      else if ($("body").is("#checkoutPage")) {
+        let cartList = JSON.parse(localStorage.getItem("cartItemList"));
+
+        if (cartList.length == 0) {
+          $("#cartLoad").hide();
+          $("#totalItems").text(cartList.length);
+
+          let item = document.createElement("li");
+          item.setAttribute("class", "list-group-item justify-content-between d-flex flex-row lh-condensed");
+          let itemdiv = document.createElement("div");
+
+          let itemHeader = document.createElement("h6");
+          itemHeader.setAttribute("class", "my-0");
+          let itemText = document.createTextNode("There are currently no items in your cart!");
+          itemHeader.appendChild(itemText);
+
+
+          itemdiv.appendChild(itemHeader);
+
+          item.appendChild(itemdiv);
+
+
+          document.getElementById("cart").appendChild(item);
+        }
+        else {
+          const cartNode = document.getElementById("cart");
+          while (cartNode.lastElementChild) {
+            cartNode.removeChild(cartNode.lastElementChild);
+          }
+
+          for (i = 0; i < response.length; i++) {
+
+            cartList.forEach(x => {
+              if (parseInt(x.itemID) == response[i].ItemID) {
+                let item = document.createElement("li");
+                item.setAttribute("class", "list-group-item justify-content-between d-flex flex-row lh-condensed");
+
+                let itemdiv = document.createElement("div");
+                itemdiv.setAttribute("style", "max-width: 150px;")
+                let itemHeader = document.createElement("h6");
+                itemHeader.setAttribute("class", "my-0");
+                let itemText = document.createTextNode(response[i].ItemName + " ×" + x.quantity);
+                itemHeader.appendChild(itemText);
+                let itemDesc = document.createElement("small");
+                itemDesc.setAttribute("class", "text-muted");
+                let descText = document.createTextNode(response[i].ItemDescription);
+                itemDesc.appendChild(descText);
+                let deleteButton = document.createElement("a");
+                deleteButton.setAttribute("role", "button");
+                deleteButton.setAttribute("id", response[i].ItemID);
+                deleteButton.setAttribute("href", "#");
+                deleteButton.setAttribute("onClick",
+                  "(function(){console.log('Deleting item with id: ' + id); let cartList= JSON.parse(localStorage.getItem('cartItemList')); for (var i = cartList.length -1; i>=0; i--){if (cartList[i].itemID == id){cartList.splice(i, 1); } } localStorage.setItem('cartItemList', JSON.stringify(cartList)); location.reload();})()");
+                deleteButton.setAttribute("class", "my-auto align-self-end")
+                let deleteText = document.createTextNode("Remove");
+                deleteButton.appendChild(deleteText);
+
+                itemdiv.appendChild(itemHeader);
+                itemdiv.appendChild(itemDesc);
+
+
+                let itemCost = document.createElement("span");
+                itemCost.setAttribute("class", "text-muted mx-3 my-auto");
+                let costNode = document.createTextNode(x.cost);
+                itemCost.appendChild(costNode);
+                item.appendChild(itemdiv);
+                item.appendChild(itemCost);
+                item.appendChild(deleteButton);
+
+                document.getElementById("cart").appendChild(item);
+                $("#totalItems").text(cartList.length);
+
+
+              }
+            })
+            $("#cartLoad").hide();
+          }
+        }
+      }
+
+      else if ($("body").is("#tpirPage")) {
+        $("#tpirLoad").hide();
+        $("#tpirStart").show();
+        $("#tpirStartButton").click(function () {
+          $("#tpirStart").hide(200);
+          let randomItemID = (Math.floor(Math.random() * 28) + 1);
+          for (i = 0; i < response.length; i++) {
+            if (response[i].ItemID == randomItemID) {
+              let selectedItem = response[i];
+              console.log(selectedItem.ItemName);
+            }
+          }
+        })
+      }
+    });
+  }
+
+
+
 
   var settings = {
     "async": true,
@@ -322,137 +319,141 @@ $.ajax(settings).done(function (response) {
     }
   }
 
-  $.ajax(settings).done(function (response) {
-    if ($("body").is("#loginPage")){
-      
+  if ($("body").is("#loginPage") || $("body").is("#itemPage")) {
 
-      $("#Log-in").submit(function(e){
-        e.preventDefault();
+    $.ajax(settings).done(function (response) {
+      if ($("body").is("#loginPage")) {
 
-        let username = $('#username').val();
-        let password = $('#password').val();
-        console.log(username);
-        console.log(password);
-        let found = false;
-        response.forEach(element => {
-          if (element.username == username && element.password == password){
-            console.log("Signing in...");
-            found=true;
-       
+
+        $("#Log-in").submit(function (e) {
+          e.preventDefault();
+
+          let username = $('#username').val();
+          let password = $('#password').val();
+          console.log(username);
+          console.log(password);
+          let found = false;
+          response.forEach(element => {
+            if (element.username == username && element.password == password) {
+              console.log("Signing in...");
+              found = true;
+
+              $("#mainAnimation").hide();
+              $("#successAnimation").show();
+
+              setTimeout(function () {
+                $("#successAnimation").hide();
+                $("#mainAnimation").show();
+                $("#Log-in").trigger("reset");
+                let cartItemList = [];
+                localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
+                window.location.href = "main.html";
+              }, 2000);
+            }
+          })
+
+          if (found == false) {
+            console.log("Account not found!");
             $("#mainAnimation").hide();
-            $("#successAnimation").show();
+            $("#failAnimation").show();
 
-            setTimeout(function (){
-              $("#successAnimation").hide();
-              $("#mainAnimation").show();
-              $("#Log-in").trigger("reset");
-              let cartItemList = [];
-              localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
-              window.location.href = "main.html";
+            setTimeout(function () {
+              $("#failAnimation").hide(100);
+              $("#mainAnimation").show(100);
             }, 2000);
           }
+
         })
-        
-        if (found == false){
-          console.log("Account not found!");
-          $("#mainAnimation").hide();
-          $("#failAnimation").show();
 
-          setTimeout(function(){
-            $("#failAnimation").hide(100);
-            $("#mainAnimation").show(100);
-          }, 2000);
-        }
-      
-      })
+        $("#startSignup").click(function () {
+          $("#mainBlock").hide();
+          $("#signupBlock").show();
+        })
 
-      $("#startSignup").click(function(){
-      $("#mainBlock").hide();
-      $("#signupBlock").show();
-      })
-    
-    $("#sign-up").submit(function(e){
-      e.preventDefault();
-      console.log("hello");
+        $("#sign-up").submit(function (e) {
+          e.preventDefault();
+          console.log("hello");
 
-      
-      let username = $('#signupUser').val();
-      let password = $('#signupPassw').val();
-      let email = $('#signupEmail').val();
-      
-      var jsondata = {
-          "username": username,
-          "password": password,
-          "email": email
-      }
 
-      var settings = {
-          "async": true,
-          "crossDomain": true,
-          "url": "https://accountdatabase-35b2.restdb.io/rest/account",
-          "method": "POST",
-          "headers": {
-            "content-type": "application/json",
-            "x-apikey": "6017b0836adfba69db8b6c22",
-            "cache-control": "no-cache"
-          },
-          "processData": false,
-          "data": JSON.stringify(jsondata),
-          error: function(e){
-            console.log("ERROR: " + e.responseJSON.message);
-            $("#errMsg").text("Username already exists!");
-          },
-          "beforeSend": function(){
-              $("#submitsignup").prop("disabled", true);
+          let username = $('#signupUser').val();
+          let password = $('#signupPassw').val();
+          let email = $('#signupEmail').val();
+
+          var jsondata = {
+            "username": username,
+            "password": password,
+            "email": email
           }
+
+          var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://accountdatabase-35b2.restdb.io/rest/account",
+            "method": "POST",
+            "headers": {
+              "content-type": "application/json",
+              "x-apikey": "6017b0836adfba69db8b6c22",
+              "cache-control": "no-cache"
+            },
+            "processData": false,
+            "data": JSON.stringify(jsondata),
+            error: function (e) {
+              console.log("ERROR: " + e.responseJSON.message);
+              $("#errMsg").text("Username already exists!");
+            },
+            "beforeSend": function () {
+              $("#submitsignup").prop("disabled", true);
+            }
+          }
+
+          $.ajax(settings).done(function (response) {
+            console.log("Successful creation of account!");
+            let cartItemList = [];
+            localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
+            window.location.href = "main.html";
+          })
+        })
+
+      }
+      else if ($("body").is("#itemPage")) {
+        $("#quantityPurchased").focusout(function () {
+          $("#subtotalCost").val("$" + Number(localStorage.getItem("ItemPrice") * $("#quantityPurchased").val()).toFixed(2));
+
+        });
+
+        $("#addToCart").submit(function (e) {
+          e.preventDefault();
+
+
+          let cartList = JSON.parse(localStorage.getItem('cartItemList'));
+          let found = false;
+          cartList.forEach(element => {
+            if (element.itemID == localStorage.getItem("ItemID")) {
+              element.quantity = (parseFloat(element.quantity) + parseFloat($("#quantityPurchased").val())).toString();
+              element.cost = Number(parseFloat(element.quantity) * localStorage.getItem("ItemPrice")).toFixed(2);
+              found = true;
+            }
+          }
+          )
+
+          if (found == false) {
+            let cartItem = new CartItem(localStorage.getItem("ItemID"),
+              $("#quantityPurchased").val(), Number(localStorage.getItem("ItemPrice") * $("#quantityPurchased").val()).toFixed(2));
+            cartList.push(cartItem);
+          }
+
+          localStorage.setItem('cartItemList', JSON.stringify(cartList));
+
+          setTimeout(function () {
+            window.location.href = 'main.html'
+          }, 1500)
+        })
       }
 
-      $.ajax(settings).done(function(response){
-          console.log("Successful creation of account!");
-          let cartItemList = [];
-          localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
-          window.location.href = "main.html";              
-      })
+      // end of ajax
     })
-    
-  }
-  else if ($("body").is("#itemPage")){
-    $("#quantityPurchased").focusout(function(){
-      $("#subtotalCost").val("$"+ Number(localStorage.getItem("ItemPrice") * $("#quantityPurchased").val()).toFixed(2));
-      
-    });
-
-    $("#addToCart").submit(function(e){
-      e.preventDefault();
-      
-      
-      let cartList = JSON.parse(localStorage.getItem('cartItemList'));
-      let found = false;
-      cartList.forEach(element =>{
-        if (element.itemID == localStorage.getItem("ItemID")){
-          element.quantity = (parseFloat(element.quantity) + parseFloat($("#quantityPurchased").val())).toString();
-          element.cost = Number(parseFloat(element.quantity) * localStorage.getItem("ItemPrice")).toFixed(2);
-          found = true;
-        }
-      }
-      )
-
-      if (found == false){
-        let cartItem = new CartItem(localStorage.getItem("ItemID"),
-         $("#quantityPurchased").val(), Number(localStorage.getItem("ItemPrice") * $("#quantityPurchased").val()).toFixed(2));
-        cartList.push(cartItem);
-      }
-
-      localStorage.setItem('cartItemList', JSON.stringify(cartList));
-      
-      setTimeout(function(){
-        window.location.href = 'main.html'
-      }, 1500)
-    })
   }
 
-  // end of ajax
-  })
 })
 
 // Create CartItem constructor for CartItem object
@@ -464,7 +465,7 @@ function CartItem(itemID, quantity, cost) {
 
 
 //Start of code for triva function
-if($("body").is("#triviaPage")){
+if ($("body").is("#triviaPage")) {
   var myHeaders = new Headers();
   myHeaders.append("Cookie", "PHPSESSID=db0d6efdab67b239fecd4fa9109cb303");
 
@@ -480,12 +481,12 @@ if($("body").is("#triviaPage")){
       console.log(result)
       let question = document.createElement('h1')
       let decodedquestion = decodeURIComponent(result.results[0].question)// decoding the triva question from URL Encoding (RFC 3986)
-      
+
 
       question.appendChild(document.createTextNode(decodedquestion))
 
       document.getElementById("quiz").appendChild(question)
-      
+
       //Creating triva form
       let quiz = document.createElement("form")
       quiz.setAttribute("id", "trivia")
@@ -520,12 +521,12 @@ if($("body").is("#triviaPage")){
       //End of creating triva form
 
       //to randomise correct answer location
-      let randomise = Math.floor(Math.random() * 4)+ 1; 
-      
-      
+      let randomise = Math.floor(Math.random() * 4) + 1;
 
-       
-      if(randomise == 1){
+
+
+
+      if (randomise == 1) {
         let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
         lable1.appendChild(document.createTextNode(decodedanswer))
         option1.setAttribute("class", "correctans")
@@ -535,7 +536,7 @@ if($("body").is("#triviaPage")){
         submitbutton.setAttribute("value", "submit")
         submitbutton.setAttribute("id", "submitquiz")
 
-        for(i = 0; i < result.results[0].incorrect_answers.length; i++){
+        for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
           console.log("hi")
           console.log(decodeURI(result.results[0].incorrect_answers[i]))
@@ -556,7 +557,7 @@ if($("body").is("#triviaPage")){
 
       }
 
-      else if(randomise == 2){
+      else if (randomise == 2) {
         let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
         lable2.appendChild(document.createTextNode(decodedanswer))
         option2.setAttribute("class", "correctans")
@@ -566,7 +567,7 @@ if($("body").is("#triviaPage")){
         submitbutton.setAttribute("value", "submit")
         submitbutton.setAttribute("id", "submitquiz")
 
-        for(i = 0; i < result.results[0].incorrect_answers.length; i++){
+        for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
           let optionarray = [lable1, lable3, lable4]
           optionarray[i].appendChild(document.createTextNode(decodedoption))
@@ -584,7 +585,7 @@ if($("body").is("#triviaPage")){
         document.getElementById("quiz").appendChild(quiz)
       }
 
-      else if(randomise == 3){
+      else if (randomise == 3) {
         let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
         lable3.appendChild(document.createTextNode(decodedanswer))
         option3.setAttribute("class", "correctans")
@@ -594,12 +595,12 @@ if($("body").is("#triviaPage")){
         submitbutton.setAttribute("value", "submit")
         submitbutton.setAttribute("id", "submitquiz")
 
-        for(i = 0; i < result.results[0].incorrect_answers.length; i++){
+        for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
-          
+
           let optionarray = [lable1, lable2, lable4]
           optionarray[i].appendChild(document.createTextNode(decodedoption))
-          
+
         }
         quiz.appendChild(lable1)
         quiz.appendChild(option1)
@@ -613,7 +614,7 @@ if($("body").is("#triviaPage")){
         document.getElementById("quiz").appendChild(quiz)
       }
 
-      else if(randomise == 4){
+      else if (randomise == 4) {
         let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
         lable4.appendChild(document.createTextNode(decodedanswer))
         option4.setAttribute("class", "correctans")
@@ -623,7 +624,7 @@ if($("body").is("#triviaPage")){
         submitbutton.setAttribute("value", "submit")
         submitbutton.setAttribute("id", "submitquiz")
 
-        for(i = 0; i < result.results[0].incorrect_answers.length; i++){
+        for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
           let optionarray = [lable1, lable2, lable3]
           optionarray[i].appendChild(document.createTextNode(decodedoption))
@@ -642,17 +643,17 @@ if($("body").is("#triviaPage")){
       }
       // End of randomising correct ans location
 
-      
-      
-      
-      document.getElementById("submitquiz").addEventListener("click", function(event) {
+
+
+
+      document.getElementById("submitquiz").addEventListener("click", function (event) {
         event.preventDefault();
-        
+
         // Code for what actions to take when user answers question correctly
-        if(document.querySelector('input[name="trivia"]:checked').classList.contains("correctans")){
+        if (document.querySelector('input[name="trivia"]:checked').classList.contains("correctans")) {
           document.querySelectorAll('h1').forEach(e => e.remove())
           document.querySelectorAll('#trivia').forEach(e => e.remove())
-          
+
           let result = document.createElement('h1')
           result.appendChild(document.createTextNode("Congrats!!! You have earned yourself 10% off your next purchase."))
 
@@ -660,7 +661,7 @@ if($("body").is("#triviaPage")){
         }
 
         // Code for what actions to take when user answers question wrongly
-        else{
+        else {
 
           document.querySelectorAll('h1').forEach(e => e.remove())
           document.querySelectorAll('#trivia').forEach(e => e.remove())
@@ -673,7 +674,7 @@ if($("body").is("#triviaPage")){
         }
       })
 
-      
+
     })
 }
 //End of code for triva function

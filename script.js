@@ -225,7 +225,7 @@ $.ajax(settings).done(function (response) {
             let itemdiv = document.createElement("div");
             let itemHeader = document.createElement("h6");
             itemHeader.setAttribute("class", "my-0")
-            let itemText = document.createTextNode(response[i].ItemName);
+            let itemText = document.createTextNode(response[i].ItemName + " ×" + x.quantity);
             itemHeader.appendChild(itemText);
             let itemDesc = document.createElement("small");
             itemDesc.setAttribute("style", "width: 20px;");

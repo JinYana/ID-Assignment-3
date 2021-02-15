@@ -54,7 +54,7 @@
     margin: 0px 200px;
 }
 
-/*Styling for home page(index.html)*/
+/*Styling for home page(main.html)*/
 .parent{
     display: flex;
     align-items: center;
@@ -96,4 +96,43 @@
     justify-content: center;
     width: 220px;
     height: 220px;
+}
+
+/*Styling for Trivia page(trivia.html)*/
+
+#quiz h1{
+    font-family: 'Quicksand', sans-serif;
+}
+
+#trivia div{
+    margin: 30px;
+    border-style: solid;
+    border: 2px;
+    border-color: black;
+    
+}
+
+#triviaintro{
+    font-family: 'Noto Sans SC', sans-serif;
+    margin: auto;
+    margin-top: 20px;
+    width: 980px;
+    
+}
+
+
+#trivia label{
+    font-size: 30px;
+}
+
+#trivia #submitquiz{
+    width: 100px;
+    margin: 30px;
+    
+}
+
+#quiz{
+    width:700px;
+    margin:auto;
+    margin-top: 200px;
 }

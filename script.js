@@ -491,33 +491,51 @@ if ($("body").is("#triviaPage")) {
       let quiz = document.createElement("form")
       quiz.setAttribute("id", "trivia")
 
-      let option1 = document.createElement("input")
-      option1.setAttribute("type", "radio")
-      option1.setAttribute("id", "opt1")
-      option1.setAttribute("name", "trivia")
+
+      let option1 = document.createElement("div")
+      let input1 = document.createElement("input")
+      input1.setAttribute("type", "radio")
+      input1.setAttribute("id", "opt1")
+      input1.setAttribute("name", "trivia")
       let lable1 = document.createElement("label")
       lable1.setAttribute("for", "opt1")
+      option1.appendChild(lable1)
+      option1.appendChild(input1)
 
-      let option2 = document.createElement("input")
-      option2.setAttribute("type", "radio")
-      option2.setAttribute("id", "opt2")
-      option2.setAttribute("name", "trivia")
+      let option2 = document.createElement("div")
+      let input2 = document.createElement("input")
+      input2.setAttribute("type", "radio")
+      input2.setAttribute("id", "opt2")
+      input2.setAttribute("name", "trivia")
       let lable2 = document.createElement("label")
       lable2.setAttribute("for", "opt2")
+      option2.appendChild(lable2)
+      option2.appendChild(input2)
 
-      let option3 = document.createElement("input")
-      option3.setAttribute("type", "radio")
-      option3.setAttribute("id", "opt3")
-      option3.setAttribute("name", "trivia")
+      let option3 = document.createElement("div")
+      let input3 = document.createElement("input")
+      input3.setAttribute("type", "radio")
+      input3.setAttribute("id", "opt3")
+      input3.setAttribute("name", "trivia")
       let lable3 = document.createElement("label")
       lable3.setAttribute("for", "opt3")
+      option3.appendChild(lable3)
+      option3.appendChild(input3)
 
-      let option4 = document.createElement("input")
-      option4.setAttribute("type", "radio")
-      option4.setAttribute("id", "opt4")
-      option4.setAttribute("name", "trivia")
+      let option4 = document.createElement("div")
+      let input4 = document.createElement("input")
+      input4.setAttribute("type", "radio")
+      input4.setAttribute("id", "opt4")
+      input4.setAttribute("name", "trivia")
       let lable4 = document.createElement("label")
       lable4.setAttribute("for", "opt4")
+      option4.appendChild(lable4)
+      option4.appendChild(input4)
+
+      let submitbutton = document.createElement("input")
+      submitbutton.setAttribute("type", "submit")
+      submitbutton.setAttribute("value", "submit")
+      submitbutton.setAttribute("id", "submitquiz")
       //End of creating triva form
 
       //to randomise correct answer location
@@ -529,12 +547,9 @@ if ($("body").is("#triviaPage")) {
       if (randomise == 1) {
         let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
         lable1.appendChild(document.createTextNode(decodedanswer))
-        option1.setAttribute("class", "correctans")
+        input1.setAttribute("class", "correctans")
 
-        let submitbutton = document.createElement("input")
-        submitbutton.setAttribute("type", "submit")
-        submitbutton.setAttribute("value", "submit")
-        submitbutton.setAttribute("id", "submitquiz")
+        
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
@@ -544,28 +559,17 @@ if ($("body").is("#triviaPage")) {
           optionarray[i].appendChild(document.createTextNode(decodedoption))
 
         }
-        quiz.appendChild(lable1)
-        quiz.appendChild(option1)
-        quiz.appendChild(lable2)
-        quiz.appendChild(option2)
-        quiz.appendChild(lable3)
-        quiz.appendChild(option3)
-        quiz.appendChild(lable4)
-        quiz.appendChild(option4)
-        quiz.appendChild(submitbutton)
-        document.getElementById("quiz").appendChild(quiz)
+        
+        
 
       }
 
       else if (randomise == 2) {
         let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
         lable2.appendChild(document.createTextNode(decodedanswer))
-        option2.setAttribute("class", "correctans")
+        input2.setAttribute("class", "correctans")
 
-        let submitbutton = document.createElement("input")
-        submitbutton.setAttribute("type", "submit")
-        submitbutton.setAttribute("value", "submit")
-        submitbutton.setAttribute("id", "submitquiz")
+        
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
@@ -573,27 +577,15 @@ if ($("body").is("#triviaPage")) {
           optionarray[i].appendChild(document.createTextNode(decodedoption))
 
         }
-        quiz.appendChild(lable1)
-        quiz.appendChild(option1)
-        quiz.appendChild(lable2)
-        quiz.appendChild(option2)
-        quiz.appendChild(lable3)
-        quiz.appendChild(option3)
-        quiz.appendChild(lable4)
-        quiz.appendChild(option4)
-        quiz.appendChild(submitbutton)
-        document.getElementById("quiz").appendChild(quiz)
+        
       }
 
       else if (randomise == 3) {
         let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
         lable3.appendChild(document.createTextNode(decodedanswer))
-        option3.setAttribute("class", "correctans")
+        input3.setAttribute("class", "correctans")
 
-        let submitbutton = document.createElement("input")
-        submitbutton.setAttribute("type", "submit")
-        submitbutton.setAttribute("value", "submit")
-        submitbutton.setAttribute("id", "submitquiz")
+        
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
@@ -602,27 +594,15 @@ if ($("body").is("#triviaPage")) {
           optionarray[i].appendChild(document.createTextNode(decodedoption))
 
         }
-        quiz.appendChild(lable1)
-        quiz.appendChild(option1)
-        quiz.appendChild(lable2)
-        quiz.appendChild(option2)
-        quiz.appendChild(lable3)
-        quiz.appendChild(option3)
-        quiz.appendChild(lable4)
-        quiz.appendChild(option4)
-        quiz.appendChild(submitbutton)
-        document.getElementById("quiz").appendChild(quiz)
+        
       }
 
       else if (randomise == 4) {
         let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
         lable4.appendChild(document.createTextNode(decodedanswer))
-        option4.setAttribute("class", "correctans")
+        input4.setAttribute("class", "correctans")
 
-        let submitbutton = document.createElement("input")
-        submitbutton.setAttribute("type", "submit")
-        submitbutton.setAttribute("value", "submit")
-        submitbutton.setAttribute("id", "submitquiz")
+        
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
@@ -630,17 +610,15 @@ if ($("body").is("#triviaPage")) {
           optionarray[i].appendChild(document.createTextNode(decodedoption))
 
         }
-        quiz.appendChild(lable1)
-        quiz.appendChild(option1)
-        quiz.appendChild(lable2)
-        quiz.appendChild(option2)
-        quiz.appendChild(lable3)
-        quiz.appendChild(option3)
-        quiz.appendChild(lable4)
-        quiz.appendChild(option4)
-        quiz.appendChild(submitbutton)
-        document.getElementById("quiz").appendChild(quiz)
+        
       }
+
+      quiz.appendChild(option1)
+      quiz.appendChild(option2)
+      quiz.appendChild(option3)
+      quiz.appendChild(option4)
+      quiz.appendChild(submitbutton)
+      document.getElementById("quiz").appendChild(quiz)
       // End of randomising correct ans location
 
 

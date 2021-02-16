@@ -335,7 +335,12 @@ $(document).ready(function () {
           let found = false;
           response.forEach(element => {
             if (element.username == username && element.password == password) {
-              console.log("Signing in...");
+              console.log(element._id);
+              localStorage.setItem("accid", element._id)
+              localStorage.setItem("accuser", element.username)
+              localStorage.setItem("accpass", element.password)
+              localStorage.setItem("accemail", element.email)
+
               found = true;
 
               $("#mainAnimation").hide();
@@ -373,16 +378,19 @@ $(document).ready(function () {
         $("#sign-up").submit(function (e) {
           e.preventDefault();
           console.log("hello");
+          
 
 
           let username = $('#signupUser').val();
           let password = $('#signupPassw').val();
           let email = $('#signupEmail').val();
+          
 
           var jsondata = {
             "username": username,
             "password": password,
-            "email": email
+            "email": email,
+            "discount": 0
           }
 
           var settings = {
@@ -408,6 +416,10 @@ $(document).ready(function () {
 
           $.ajax(settings).done(function (response) {
             console.log("Successful creation of account!");
+            localStorage.setItem("accid", response._id)
+            localStorage.setItem("accuser", response.username)
+            localStorage.setItem("accpass", response.password)
+            localStorage.setItem("accemail", response.email)
             let cartItemList = [];
             localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
             window.location.href = "main.html";
@@ -465,7 +477,10 @@ function CartItem(itemID, quantity, cost) {
 
 
 //Start of code for triva function
+
+
 if ($("body").is("#triviaPage")) {
+  console.log(localStorage.getItem("accid"))
   var myHeaders = new Headers();
   myHeaders.append("Cookie", "PHPSESSID=db0d6efdab67b239fecd4fa9109cb303");
 
@@ -549,7 +564,7 @@ if ($("body").is("#triviaPage")) {
         lable1.appendChild(document.createTextNode(decodedanswer))
         input1.setAttribute("class", "correctans")
 
-        
+
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
@@ -559,8 +574,8 @@ if ($("body").is("#triviaPage")) {
           optionarray[i].appendChild(document.createTextNode(decodedoption))
 
         }
-        
-        
+
+
 
       }
 
@@ -569,7 +584,7 @@ if ($("body").is("#triviaPage")) {
         lable2.appendChild(document.createTextNode(decodedanswer))
         input2.setAttribute("class", "correctans")
 
-        
+
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
@@ -577,7 +592,7 @@ if ($("body").is("#triviaPage")) {
           optionarray[i].appendChild(document.createTextNode(decodedoption))
 
         }
-        
+
       }
 
       else if (randomise == 3) {
@@ -585,7 +600,7 @@ if ($("body").is("#triviaPage")) {
         lable3.appendChild(document.createTextNode(decodedanswer))
         input3.setAttribute("class", "correctans")
 
-        
+
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
@@ -594,7 +609,7 @@ if ($("body").is("#triviaPage")) {
           optionarray[i].appendChild(document.createTextNode(decodedoption))
 
         }
-        
+
       }
 
       else if (randomise == 4) {
@@ -602,7 +617,7 @@ if ($("body").is("#triviaPage")) {
         lable4.appendChild(document.createTextNode(decodedanswer))
         input4.setAttribute("class", "correctans")
 
-        
+
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
@@ -610,7 +625,7 @@ if ($("body").is("#triviaPage")) {
           optionarray[i].appendChild(document.createTextNode(decodedoption))
 
         }
-        
+
       }
 
       quiz.appendChild(option1)
@@ -636,6 +651,35 @@ if ($("body").is("#triviaPage")) {
           result.appendChild(document.createTextNode("Congrats!!! You have earned yourself 10% off your next purchase."))
 
           document.getElementById("quiz").appendChild(result)
+
+          objid = localStorage.getItem("accid")
+          
+        
+          var jsondata = {
+            "username": localStorage.getItem("accuser"),
+            "password": localStorage.getItem("accpass"),
+            "email": localStorage.getItem("accemail"),
+            "discount": 10
+          
+            
+          };
+          var settings = {
+              "async": true,
+              "crossDomain": true,
+              "url": "https://accountdatabase-35b2.restdb.io/rest/account/" + localStorage.getItem("accid"),
+              "method": "PUT",
+              "headers": {
+                "content-type": "application/json",
+                "x-apikey": "6017b0836adfba69db8b6c22",
+                "cache-control": "no-cache"
+              },
+              "processData": false,
+              "data": JSON.stringify(jsondata)
+            }
+
+            $.ajax(settings).done(function (response) {
+              console.log(response);
+            });
         }
 
         // Code for what actions to take when user answers question wrongly
@@ -654,6 +698,8 @@ if ($("body").is("#triviaPage")) {
 
 
     })
+
+
 }
 //End of code for triva function
 

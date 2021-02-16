@@ -475,7 +475,7 @@ if ($("body").is("#triviaPage")) {
     redirect: 'follow'
   };
 
-  fetch("https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986", requestOptions)
+  fetch("https://opentdb.com/api.php?amount=1&category=15&type=multiple&encode=url3986", requestOptions)
     .then(response => response.json())
     .then(result => {
       console.log(result)

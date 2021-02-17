@@ -6,6 +6,8 @@ $(document).ready(function () {
   $("#signupBlock").hide();
   $("#tpirStart").hide();
   $("#tpirAnswerForm").hide();
+  $("#tpirSecondContainer").hide();
+  $("#tpirThirdContainer").hide();
 
 
   var settings = {
@@ -295,18 +297,21 @@ $(document).ready(function () {
         
         $("#tpirLoad").hide();
         $("#tpirStart").show();
+        let itemPrice = 0;
         
         $("#tpirStartButton").click(function () {
           $("#tpirStart").hide(200);
           $("#tpirHeader").hide();
           $("#tpirAnswerForm").show();
-          
+
           let randomItemID = (Math.floor(Math.random() * 28) + 1);
           for (i = 0; i < response.length; i++) {
             if (response[i].ItemID == randomItemID) {
               let selectedItem = response[i];
+              itemPrice = selectedItem.ItemPrice;
+
               console.log(selectedItem.ItemName);
-              console.log(selectedItem.ItemPrice);
+              console.log(itemPrice);
 
               let item = document.createElement("a");
               item.setAttribute("class", "container flex-column d-flex mx-auto my-auto")
@@ -335,17 +340,56 @@ $(document).ready(function () {
               document.getElementById("chosenItem").appendChild(item)
             }
           }
+
+          $("#tpirAnswerForm").submit(function(e){
+            return false;
+          });
           var timeleft = 5;
           var downloadTimer = setInterval(function(){
             if(timeleft <= 0){
               clearInterval(downloadTimer);
               $("#countdown").hide();
+              $("#tpirQuestion").hide();
               $("#tpirAns").attr('readonly', true);
+
+              let tpirAns = parseFloat($("#tpirAns").val());
+              console.log(tpirAns);
+
+              if (tpirAns == itemPrice){
+                $("#tpirSecondContainer").addClass("d-flex")
+                $("#tpirSecondContainer").show();
+                $("#discountMessage").text("You have won 30% discount off your next order!");
+              }
+              else if ((tpirAns-itemPrice)>0){
+                if(tpirAns-itemPrice <=5){
+                  $("#tpirSecondContainer").addClass("d-flex")
+                  $("#tpirSecondContainer").show();
+                  $("#discountMessage").text("You have won 20% discount off your next order!");
+                }
+                else{
+                  $("#tpirThirdContainer").addClass("d-flex")
+                  $("#tpirThirdContainer").show();
+                  
+                }
+              }
+              else{
+                if (itemPrice-tpirAns<=5){
+                  $("#tpirSecondContainer").addClass("d-flex")
+                  $("#tpirSecondContainer").show();
+                  $("#discountMessage").text("You have won 20% discount off your next order!");
+                }
+                else{
+                  $("#tpirThirdContainer").addClass("d-flex")
+                  $("#tpirThirdContainer").show();
+                }
+              }
+
             } else {
-              $("#countdown").text(timeleft + " seconds remaining");
+              $("#countdown").text(timeleft + " second(s) remaining");
             }
             timeleft -= 1;
           }, 1000);
+          
         })
       }
     });

@@ -66,19 +66,35 @@
                 </div>
             </div>
         </header>
-        <div class="container flex-column d-flex w-100 h-30 align-items-center">
+        <div id="tpirFirstContainer"class="container flex-column d-flex w-100 h-30 align-items-center">
           <div id="chosenItem" class="mx-auto">
             <!-- Item is shown using Javascript-->    
           </div>
           <div class="mx-auto" id="countdown"></div>
           <form id="tpirAnswerForm" class="mt-3">  
             
-            <h2 id= "log-intitle" class="mx-auto w-100">How much does this cost?</h2>
+            <h2 id= "tpirQuestion" class="mx-auto w-100">How much does this cost?</h2>
             <div class="form-group mx-auto mt-4">
                 <label for="tpirAns">Answer:</label>
-                <input type="number" class="form-control" value="" id="tpirAns" placeholder="" required>
+                <input type="number" class="form-control" min="0.01" onkeypress="return event.charCode >= 46 " id="tpirAns" placeholder="" required>
             </div>
           </form>
+        </div>
+        <div id="tpirSecondContainer" class="container flex-column h-50 align-items-center">
+          <h1 class="mx-auto">Congratulations!</h1>
+          
+          <lottie-player class="mx-auto" src="https://assets7.lottiefiles.com/packages/lf20_uoempsuz.json"  
+          background="transparent"  speed="1"  style="width: 500px; height: 300px;"  loop  autoplay></lottie-player>
+          <h3 id="discountMessage" class="mx-auto"></h3>
+          <a class="btn btn-outline-success mx-auto my-4" href="main.html">Go back</a>
+        </div>
+        <div id="tpirThirdContainer" class="container flex-column h-50 align-items-center">
+          <h1 class="mx-auto">Awww, tough luck.</h1>
+          
+          <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_qPaCJt.json"  
+          background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
+          <h3 id="discountMessage" class="mx-auto">Your answer was not close to the price of the item.</h3>
+          <a class="btn btn-outline-success mx-auto my-4" href="main.html">Go back</a>
         </div>
         <script src="script.js"></script>
         <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>

@@ -1,4 +1,5 @@
 
+let discount = 0
 $(document).ready(function () {
   // Code for Iteminventory(to display items)
   $("#successAnimation").hide();
@@ -30,11 +31,11 @@ $(document).ready(function () {
         localStorage.removeItem("ItemID");
         localStorage.removeItem("ItemPrice");
         //Code for deafault main page
-        let header = document.createElement('h1')
+        
         let itemcat = document.createTextNode("All Items")
-        header.setAttribute("class", "itemheader")
-        header.appendChild(itemcat)
-        document.getElementById("inventory").appendChild(header)
+        document.getElementById("itemcat").appendChild(itemcat)
+        
+        
 
 
         for (i = 0; i < response.length; i++) {
@@ -87,14 +88,11 @@ $(document).ready(function () {
           event.preventDefault();
 
           document.querySelectorAll('.item').forEach(e => e.remove())//To clear the page
-          document.querySelectorAll('.itemheader').forEach(e => e.remove())
+          
 
           //To Change the title to the item category chosen
-          let header = document.createElement('h1')
-          let itemcat = document.createTextNode(document.getElementById("category").value)
-          header.setAttribute("class", "itemheader")
-          header.appendChild(itemcat)
-          document.getElementById("inventory").appendChild(header)
+          let itemcat = document.getElementById("itemcat")
+          itemcat.innerHTML = document.getElementById("category").value
 
 
           for (i = 0; i < response.length; i++) {
@@ -435,11 +433,9 @@ $(document).ready(function () {
           let found = false;
           response.forEach(element => {
             if (element.username == username && element.password == password) {
-              console.log(element._id);
-              localStorage.setItem("accid", element._id)
-              localStorage.setItem("accuser", element.username)
-              localStorage.setItem("accpass", element.password)
-              localStorage.setItem("accemail", element.email)
+              
+              localStorage.setItem("discount", "zero")
+              
 
               found = true;
 
@@ -516,10 +512,7 @@ $(document).ready(function () {
 
           $.ajax(settings).done(function (response) {
             console.log("Successful creation of account!");
-            localStorage.setItem("accid", response._id)
-            localStorage.setItem("accuser", response.username)
-            localStorage.setItem("accpass", response.password)
-            localStorage.setItem("accemail", response.email)
+            localStorage.setItem("discount", "zero")
             let cartItemList = [];
             localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
             window.location.href = "main.html";
@@ -580,7 +573,7 @@ function CartItem(itemID, quantity, cost) {
 
 
 if ($("body").is("#triviaPage")) {
-  console.log(localStorage.getItem("accid"))
+  
   var myHeaders = new Headers();
   myHeaders.append("Cookie", "PHPSESSID=db0d6efdab67b239fecd4fa9109cb303");
 
@@ -596,6 +589,7 @@ if ($("body").is("#triviaPage")) {
       console.log(result)
       let question = document.createElement('h1')
       let decodedquestion = decodeURIComponent(result.results[0].question)// decoding the triva question from URL Encoding (RFC 3986)
+      question.setAttribute("class","question")
 
 
       question.appendChild(document.createTextNode(decodedquestion))
@@ -668,8 +662,7 @@ if ($("body").is("#triviaPage")) {
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
           let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
-          console.log("hi")
-          console.log(decodeURI(result.results[0].incorrect_answers[i]))
+          
           let optionarray = [lable2, lable3, lable4]
           optionarray[i].appendChild(document.createTextNode(decodedoption))
 
@@ -747,39 +740,46 @@ if ($("body").is("#triviaPage")) {
           document.querySelectorAll('h1').forEach(e => e.remove())
           document.querySelectorAll('#trivia').forEach(e => e.remove())
 
+          if(localStorage.getItem("discount") == "zero" ){
+            localStorage.setItem("discount", "10")
+            
+          }
+          else if(localStorage.getItem("discount") == "10"){
+            localStorage.setItem("discount", "20")
+
+          }
+          else if(localStorage.getItem("discount") == "20"){
+            localStorage.setItem("discount", "30")
+            
+          }
+          else if(localStorage.getItem("discount") == "30"){
+            localStorage.setItem("discount", "40")
+            
+          }
+          else if(localStorage.getItem("discount") == "40"){
+            localStorage.setItem("discount", "50")
+            
+          }
+          else if(localStorage.getItem("discount") == "50"){
+            localStorage.setItem("discount", "60")
+            
+          }
+          console.log(localStorage.getItem("discount"))
+
           let result = document.createElement('h1')
-          result.appendChild(document.createTextNode("Congrats!!! You have earned yourself 10% off your next purchase."))
+          result.appendChild(document.createTextNode("Congrats!!! You have earned yourself  a 10% discount (Capped at 60%). Total: " + localStorage.getItem("discount") + "%"))
 
           document.getElementById("quiz").appendChild(result)
 
-          objid = localStorage.getItem("accid")
+         
+
+          
+          
+
+          
           
         
-          var jsondata = {
-            "username": localStorage.getItem("accuser"),
-            "password": localStorage.getItem("accpass"),
-            "email": localStorage.getItem("accemail"),
-            "discount": 10
           
-            
-          };
-          var settings = {
-              "async": true,
-              "crossDomain": true,
-              "url": "https://accountdatabase-35b2.restdb.io/rest/account/" + localStorage.getItem("accid"),
-              "method": "PUT",
-              "headers": {
-                "content-type": "application/json",
-                "x-apikey": "6017b0836adfba69db8b6c22",
-                "cache-control": "no-cache"
-              },
-              "processData": false,
-              "data": JSON.stringify(jsondata)
-            }
-
-            $.ajax(settings).done(function (response) {
-              console.log(response);
-            });
         }
 
         // Code for what actions to take when user answers question wrongly

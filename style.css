@@ -57,29 +57,34 @@
 /*Styling for home page(main.html)*/
 .parent{
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: auto;
+    
+    
 }
 
 
 
 #inventory{
-    display: inline-flex;
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-around;
-    max-width: 1000px;
+    justify-content: space-between;
+    max-width: 880px;
     height: auto;
-    margin: auto;
+    margin:auto
     
     
     
     
 }
 
-#inventory h1{
-    width: 1000px;
-    margin: 0px 0px 30px 30px;
+#itemcat{
+    width: auto;
+    
     font-family: 'Noto Sans HK', sans-serif;
 
 }
@@ -92,16 +97,21 @@
 }
 
 .item{
-    align-items: center;
-    justify-content: center;
-    width: 220px;
+    
+    width: 100px;
     height: 220px;
+    margin: 50px;
+    
 }
+
+
 
 /*Styling for Trivia page(trivia.html)*/
 
-#quiz h1{
+.question{
     font-family: 'Quicksand', sans-serif;
+    font-size: 35px;
+
 }
 
 #trivia div{
@@ -115,8 +125,10 @@
 #triviaintro{
     font-family: 'Noto Sans SC', sans-serif;
     margin: auto;
-    margin-top: 20px;
-    width: 980px;
+    margin-bottom: 200px;
+    width: auto;
+    height: auto;
+    font-size: 35px;
     
 }
 
@@ -132,7 +144,13 @@
 }
 
 #quiz{
-    width:700px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     margin:auto;
-    margin-top: 200px;
+    
+    
+    width: auto;
+    height: auto;
 }
+

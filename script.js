@@ -5,6 +5,7 @@ $(document).ready(function () {
   $("#failAnimation").hide();
   $("#signupBlock").hide();
   $("#tpirStart").hide();
+  $("#tpirAnswerForm").hide();
 
 
   var settings = {
@@ -294,15 +295,57 @@ $(document).ready(function () {
         
         $("#tpirLoad").hide();
         $("#tpirStart").show();
+        
         $("#tpirStartButton").click(function () {
           $("#tpirStart").hide(200);
+          $("#tpirHeader").hide();
+          $("#tpirAnswerForm").show();
+          
           let randomItemID = (Math.floor(Math.random() * 28) + 1);
           for (i = 0; i < response.length; i++) {
             if (response[i].ItemID == randomItemID) {
               let selectedItem = response[i];
               console.log(selectedItem.ItemName);
+              console.log(selectedItem.ItemPrice);
+
+              let item = document.createElement("a");
+              item.setAttribute("class", "container flex-column d-flex mx-auto my-auto")
+              item.setAttribute("id", response[i].ItemID)
+
+              let title = document.createElement("p");
+              title.setAttribute("class", "mx-auto");
+              let mybr = document.createElement('br');
+              let img = document.createElement("img")
+
+              img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
+              img.setAttribute("width", "400px")
+              img.setAttribute("height", "400px")
+              img.setAttribute("class", "align-self-center")
+              let node = document.createTextNode(response[i].ItemName);
+              
+              
+              
+
+              item.appendChild(img)
+              title.appendChild(node)
+              title.appendChild(mybr)
+              
+              item.appendChild(title)
+
+              document.getElementById("chosenItem").appendChild(item)
             }
           }
+          var timeleft = 5;
+          var downloadTimer = setInterval(function(){
+            if(timeleft <= 0){
+              clearInterval(downloadTimer);
+              $("#countdown").hide();
+              $("#tpirAns").attr('readonly', true);
+            } else {
+              $("#countdown").text(timeleft + " seconds remaining");
+            }
+            timeleft -= 1;
+          }, 1000);
         })
       }
     });

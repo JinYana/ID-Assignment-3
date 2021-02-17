@@ -213,6 +213,9 @@ $(document).ready(function () {
       else if ($("body").is("#checkoutPage")) {
         let cartList = JSON.parse(localStorage.getItem("cartItemList"));
 
+        $("#username").val(localStorage.getItem("accuser"));
+        $("#email").val(localStorage.getItem("accemail"));
+
         if (cartList.length == 0) {
           $("#cartLoad").hide();
           $("#totalItems").text(cartList.length);
@@ -287,8 +290,14 @@ $(document).ready(function () {
             })         
           }
           $("#cartLoad").hide();
+          
+          // $("#checkoutDisc").text();
 
-          $("#checkoutDisc").text();
+          $("#checkoutForm").submit(function(e){
+            e.preventDefault();
+            alert("Your order has been submitted! Redirecting you to the main page...");
+            window.location.href = "main.html";
+          })
           
         }
       }

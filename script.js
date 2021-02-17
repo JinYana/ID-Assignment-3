@@ -19,7 +19,7 @@ $(document).ready(function () {
     }
   }
 
-  if ($("body").is("#mainPage") || $("body").is("#itemPage") || $("body").is("#checkoutPage")) {
+  if ($("body").is("#mainPage") || $("body").is("#itemPage") || $("body").is("#tpirPage") || $("body").is("#checkoutPage")) {
     $.ajax(settings).done(function (response) {
       console.log(response);
       if ($("body").is("#mainPage")) {
@@ -281,13 +281,17 @@ $(document).ready(function () {
 
 
               }
-            })
-            $("#cartLoad").hide();
+            })         
           }
+          $("#cartLoad").hide();
+
+          $("#checkoutDisc").text();
+          
         }
       }
 
       else if ($("body").is("#tpirPage")) {
+        
         $("#tpirLoad").hide();
         $("#tpirStart").show();
         $("#tpirStartButton").click(function () {

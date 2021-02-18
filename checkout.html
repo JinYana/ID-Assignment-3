@@ -69,13 +69,28 @@
                     <!-- Items are inserted using JavaScript here-->    
 
                   </ul>
-        
-                  <form class="card p-2">
-                    <div class="input-group">
-                      <h5 class="mr-3 mx-auto my-auto">Total discounts earned:</h5>
-                      <p class="mx-auto my-auto" id="checkoutDisc"></p>
+
+                  <div class="card p-2">
+                    <div class="d-flex justify-content-between">
+                      <h5 class="my-auto">Subtotal:</h5>
+                      <p class="my-auto" id="subtotal"></p>
                     </div>
-                  </form>
+                  </div>
+
+                  <div class="card p-2">
+                    <div class="d-flex justify-content-between">
+                      <h5 class="my-auto">Discount:</h5>
+                      <p class="my-auto" id="checkoutDisc"></p>
+                    </div>
+                  </div>
+
+                  <div class="card p-2">
+                    <div class="d-flex justify-content-between">
+                      <h5 class="my-auto">Total:</h5>
+                      <p class="my-auto" id="total"></p>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col-md-8 order-md-1">
                   <h4 class="mb-3">Billing address</h4>
@@ -115,20 +130,26 @@
                         <label for="country">Country</label>
                         <select class="custom-select d-block w-100" id="country" required>
                           <option value="">Choose...</option>
-                          <option>United States</option>
+                          <option>Singapore</option>
                         </select>
                         <div class="invalid-feedback">
                           Please select a valid country.
                         </div>
                       </div>
                       <div class="col-md-4 mb-3">
-                        <label for="state">State</label>
-                        <select class="custom-select d-block w-100" id="state" required>
+                        <label for="area">Area</label>
+                        <select class="custom-select d-block w-100" id="area" required>
                           <option value="">Choose...</option>
-                          <option>California</option>
+                          <option>Bukit Batok</option>
+                          <option>Woodlands</option>
+                          <option>Clementi</option>
+                          <option>Bedok</option>
+                          <option>Yew Tee</option>
+                          <option>Bukit Panjang</option>
+                          <option>Jurong East</option>
                         </select>
                         <div class="invalid-feedback">
-                          Please provide a valid state.
+                          Please provide a valid place.
                         </div>
                       </div>
                       <div class="col-md-3 mb-3">

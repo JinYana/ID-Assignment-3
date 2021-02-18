@@ -216,7 +216,9 @@ $(document).ready(function () {
 
         if (cartList.length == 0) {
           $("#cartLoad").hide();
-          $("#checkoutDisc").text(localStorage.getItem("discount")+"%");    
+          $("#checkoutDisc").text(localStorage.getItem("discount")+"%");   
+          $("#subtotal").text("$0");
+          $("#total").text("$0"); 
           $("#totalItems").text(cartList.length);
 
           let item = document.createElement("li");
@@ -237,10 +239,8 @@ $(document).ready(function () {
           document.getElementById("cart").appendChild(item);
         }
         else {
-          const cartNode = document.getElementById("cart");
-          while (cartNode.lastElementChild) {
-            cartNode.removeChild(cartNode.lastElementChild);
-          }
+          
+          
 
           for (i = 0; i < response.length; i++) {
 
@@ -288,14 +288,21 @@ $(document).ready(function () {
               }
             })         
           }
+          let subtotal = 0;
+          cartList.forEach(element =>{
+            subtotal += parseFloat(element.cost);
+          })
+          $("#subtotal").text("$" + String(Number(subtotal).toFixed(2)));
+          $("#total").text("$" + String(Number(subtotal * (parseInt(localStorage.getItem("discount")))/100).toFixed(2))); 
           $("#cartLoad").hide();
-          $("#checkoutDisc").text(parseInt(localStorage.getItem("discount")));     
+          $("#checkoutDisc").text(localStorage.getItem("discount") + "%");     
         }
 
         $("#checkoutForm").submit(function(e){
           e.preventDefault();
           if (cartList.length != 0){
             alert("Your order has been submitted! Redirecting you to the main page...");
+            localStorage.setItem("discount", "0")
             window.location.href = "main.html";
           }else{
             alert("There is nothing on your cart!");
@@ -453,7 +460,7 @@ $(document).ready(function () {
           response.forEach(element => {
             if (element.username == username && element.password == password) {
               
-              localStorage.setItem("discount", "zero")
+              localStorage.setItem("discount", "0")
               
 
               found = true;
@@ -531,7 +538,7 @@ $(document).ready(function () {
 
           $.ajax(settings).done(function (response) {
             console.log("Successful creation of account!");
-            localStorage.setItem("discount", "zero")
+            localStorage.setItem("discount", "0")
             let cartItemList = [];
             localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
             window.location.href = "main.html";
@@ -759,7 +766,7 @@ if ($("body").is("#triviaPage")) {
           document.querySelectorAll('h1').forEach(e => e.remove())
           document.querySelectorAll('#trivia').forEach(e => e.remove())
 
-          if(localStorage.getItem("discount") == "zero" ){
+          if(localStorage.getItem("discount") == "0" ){
             localStorage.setItem("discount", "10")
             
           }

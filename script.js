@@ -216,6 +216,7 @@ $(document).ready(function () {
 
         if (cartList.length == 0) {
           $("#cartLoad").hide();
+          $("#checkoutDisc").text(localStorage.getItem("discount")+"%");    
           $("#totalItems").text(cartList.length);
 
           let item = document.createElement("li");
@@ -288,8 +289,7 @@ $(document).ready(function () {
             })         
           }
           $("#cartLoad").hide();
-          
-          // $("#checkoutDisc").text();     
+          $("#checkoutDisc").text(parseInt(localStorage.getItem("discount")));     
         }
 
         $("#checkoutForm").submit(function(e){

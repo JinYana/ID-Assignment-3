@@ -1,24 +1,31 @@
 .masthead{
     background-color: black;
-}
-
-#mainHeader{
-    color: beige;
-    font-size: 70px;
-    font-family: 'Fredoka One', cursive;
-}
-
-.form-control{
     width: auto;
 }
+.text-center{
+    width: auto;
+    margin: auto;
+
+}
+#mainHeader{
+    color: beige;
+    font-size: 8vw;
+    font-family: 'Fredoka One', cursive;
+    
+    
+}
+
+
 
 .form-group{
-    width: 400px;
+    max-width: 400px;
+    width: auto;
     margin: auto;
 }
 
 .btn{
-    margin: 0px 200px;
+    width: auto;
+    margin: auto;
 }
 #log-intitle{
     width: 100px;
@@ -26,11 +33,18 @@
     
 }
 
+#mainAnimation{
+    
+    width: 10vw;
+    margin: auto;
+}
+
 #mainBlock{
     display: block;
     margin: 90px auto;
     padding: 120px 0px;
-    width: 500px;
+    max-width: 450px;
+    width: auto;
     border: 2px solid #ccc;
     border-radius: 16px;   
 }
@@ -38,10 +52,11 @@
 #signupBlock{
     display: block;
     margin: 90px auto;
-    padding: 90px 0px;
-    width: 500px;
+    padding: 120px 0px;
+    max-width: 450px;
+    width: auto;
     border: 2px solid #ccc;
-    border-radius: 16px;   
+    border-radius: 16px;    
 }
 
 

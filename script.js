@@ -84,7 +84,7 @@ $(document).ready(function () {
         })
 
         //Code for sort by category function
-        document.getElementById("submit").addEventListener("click", function (event) {
+        document.getElementById("category").addEventListener("input", function (event) {
           event.preventDefault();
 
           document.querySelectorAll('.item').forEach(e => e.remove())//To clear the page

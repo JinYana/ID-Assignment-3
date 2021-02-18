@@ -396,6 +396,7 @@ $(document).ready(function () {
                 $("#tpirSecondContainer").addClass("d-flex")
                 $("#tpirSecondContainer").show();
                 let newDisc = parseInt(localStorage.getItem("discount")) + 15;
+                
                 if (newDisc>60){
                   newDisc =60;
                 }
@@ -706,10 +707,12 @@ if ($("body").is("#triviaPage")) {
       option4.appendChild(lable4)
       option4.appendChild(input4)
 
-      let submitbutton = document.createElement("input")
-      submitbutton.setAttribute("type", "submit")
-      submitbutton.setAttribute("value", "submit")
-      submitbutton.setAttribute("id", "submitquiz")
+      let submitbutton = document.createElement("div")
+      let submit = document.createElement("input")
+      submit.setAttribute("type", "submit")
+      submit.setAttribute("value", "submit")
+      submit.setAttribute("id", "submitquiz")
+      submitbutton.appendChild(submit)
       // End of creating trivia form
 
       // Randomise correct answer location
@@ -726,7 +729,7 @@ if ($("body").is("#triviaPage")) {
 
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
-          let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
+          let decodedoption = decodeURIComponent(result.results[0].incorrect_answers[i])
           
           let optionarray = [lable2, lable3, lable4]
           optionarray[i].appendChild(document.createTextNode(decodedoption))
@@ -745,7 +748,7 @@ if ($("body").is("#triviaPage")) {
 
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
-          let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
+          let decodedoption = decodeURIComponent(result.results[0].incorrect_answers[i])
           let optionarray = [lable1, lable3, lable4]
           optionarray[i].appendChild(document.createTextNode(decodedoption))
 
@@ -761,7 +764,7 @@ if ($("body").is("#triviaPage")) {
 
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
-          let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
+          let decodedoption = decodeURIComponent(result.results[0].incorrect_answers[i])
 
           let optionarray = [lable1, lable2, lable4]
           optionarray[i].appendChild(document.createTextNode(decodedoption))
@@ -778,7 +781,7 @@ if ($("body").is("#triviaPage")) {
 
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
-          let decodedoption = decodeURI(result.results[0].incorrect_answers[i])
+          let decodedoption = decodeURIComponent(result.results[0].incorrect_answers[i])
           let optionarray = [lable1, lable2, lable3]
           optionarray[i].appendChild(document.createTextNode(decodedoption))
 
@@ -805,31 +808,16 @@ if ($("body").is("#triviaPage")) {
           document.querySelectorAll('h1').forEach(e => e.remove())
           document.querySelectorAll('#trivia').forEach(e => e.remove())
 
-          if(localStorage.getItem("discount") == "0" ){
-            localStorage.setItem("discount", "10")
-            
-          }
-          else if(localStorage.getItem("discount") == "10"){
-            localStorage.setItem("discount", "20")
-
-          }
-          else if(localStorage.getItem("discount") == "20"){
-            localStorage.setItem("discount", "30")
-            
-          }
-          else if(localStorage.getItem("discount") == "30"){
-            localStorage.setItem("discount", "40")
-            
-          }
-          else if(localStorage.getItem("discount") == "40"){
-            localStorage.setItem("discount", "50")
-            
-          }
-          else if(localStorage.getItem("discount") == "50"){
-            localStorage.setItem("discount", "60")
-            
+          if(parseInt(localStorage.getItem("discount")) < 60){
+            let newDisc = parseInt(localStorage.getItem("discount")) + 10;
+            localStorage.setItem("discount", String(newDisc));
           }
           console.log(localStorage.getItem("discount"))
+
+          
+
+
+          
 
           let result = document.createElement('h1')
           result.appendChild(document.createTextNode("Congrats!!! You have earned yourself  a 10% discount (Capped at 60%). Total: " + localStorage.getItem("discount") + "%"))

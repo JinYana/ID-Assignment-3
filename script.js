@@ -294,7 +294,7 @@ $(document).ready(function () {
           })
           $("#subtotal").text("$" + String(Number(subtotal).toFixed(2)));
           if (localStorage.getItem("discount") != "0"){
-            $("#total").text("$" + String(Number(subtotal * (parseInt(localStorage.getItem("discount")))/100).toFixed(2))); 
+            $("#total").text("$" + String(Number(subtotal * ((100-parseInt(localStorage.getItem("discount")))/100)).toFixed(2))); 
           }
           else{
             $("#total").text("$" + String(Number(subtotal).toFixed(2)));

@@ -369,13 +369,23 @@ $(document).ready(function () {
               if (tpirAns == itemPrice){
                 $("#tpirSecondContainer").addClass("d-flex")
                 $("#tpirSecondContainer").show();
-                $("#discountMessage").text("You have won 30% discount off your next order!");
+                let newDisc = parseInt(localStorage.getItem("discount")) + 15;
+                if (newDisc>60){
+                  newDisc =60;
+                }
+                $("#discountMessage").text("You have won 15% discount off your next order! (Capped at 60%) Total: " + String(newDisc) + "%");
+                localStorage.setItem("discount", String(newDisc)); 
               }
               else if ((tpirAns-itemPrice)>0){
                 if(tpirAns-itemPrice <=5){
                   $("#tpirSecondContainer").addClass("d-flex")
                   $("#tpirSecondContainer").show();
-                  $("#discountMessage").text("You have won 20% discount off your next order!");
+                  let newDisc = parseInt(localStorage.getItem("discount")) + 10;
+                  if (newDisc>60){
+                    newDisc =60;
+                  }
+                  $("#discountMessage").text("You have won 10% discount off your next order! (Capped at 60%) Total: " + String(newDisc) + "%");
+                  localStorage.setItem("discount", String(newDisc)); 
                 }
                 else{
                   $("#tpirThirdContainer").addClass("d-flex")
@@ -387,7 +397,12 @@ $(document).ready(function () {
                 if (itemPrice-tpirAns<=5){
                   $("#tpirSecondContainer").addClass("d-flex")
                   $("#tpirSecondContainer").show();
-                  $("#discountMessage").text("You have won 20% discount off your next order!");
+                  let newDisc = parseInt(localStorage.getItem("discount")) + 10;
+                  if (newDisc>60){
+                    newDisc =60;
+                  }
+                  $("#discountMessage").text("You have won 10% discount off your next order! (Capped at 60%) Total: " + String(newDisc) + "%");
+                  localStorage.setItem("discount", String(newDisc)); 
                 }
                 else{
                   $("#tpirThirdContainer").addClass("d-flex")

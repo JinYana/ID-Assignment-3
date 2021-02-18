@@ -1,7 +1,6 @@
 
-let discount = 0
 $(document).ready(function () {
-  // Code for Iteminventory(to display items)
+  // Hide animations and elements that only appear when specific conditions are met
   $("#successAnimation").hide();
   $("#failAnimation").hide();
   $("#signupBlock").hide();
@@ -10,33 +9,36 @@ $(document).ready(function () {
   $("#tpirSecondContainer").hide();
   $("#tpirThirdContainer").hide();
 
-
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": "https://shopinventory-7a51.restdb.io/rest/items",
-    "method": "GET",
-    "headers": {
-      "content-type": "application/json",
-      "x-apikey": "6017c9516adfba69db8b6c31",
-      "cache-control": "no-cache"
-    }
-  }
-
+  // Calling RestDB Inventory API 
+  // Only certain pages require information from this database,hence the if statement
   if ($("body").is("#mainPage") || $("body").is("#itemPage") || $("body").is("#tpirPage") || $("body").is("#checkoutPage")) {
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://shopinventory-7a51.restdb.io/rest/items",
+      "method": "GET",
+      "headers": {
+        "content-type": "application/json",
+        "x-apikey": "6017c9516adfba69db8b6c31",
+        "cache-control": "no-cache"
+      }
+    }
+
+  
+    // Code that only runs once the API responds
     $.ajax(settings).done(function (response) {
       console.log(response);
       if ($("body").is("#mainPage")) {
+        // Hide loading animation once API responds
         $("#mainLoad").hide();
+
+        // Remove localStorage values each time user accesses this page
         localStorage.removeItem("ItemID");
         localStorage.removeItem("ItemPrice");
-        //Code for deafault main page
-        
+
+        //Code for injecting elements and nodes into the main page, using information received by the API
         let itemcat = document.createTextNode("All Items")
         document.getElementById("itemcat").appendChild(itemcat)
-        
-        
-
 
         for (i = 0; i < response.length; i++) {
           let item = document.createElement("a");
@@ -69,19 +71,15 @@ $(document).ready(function () {
           document.getElementById("inventory").appendChild(item)
 
         }
-        //End of code for deafult main page
+        //End of code for default main page
 
-
+        // Add event listener to set localStorage value for item chosen.
         for (i = 0; i < response.length; i++) {
           document.getElementsByTagName("a")[i].addEventListener("click", function (event) {
             localStorage.setItem("ItemID", this.id)
           })
 
         }
-
-        $("#searchBar").submit(function (e) {
-          e.preventDefault();
-        })
 
         //Code for sort by category function
         document.getElementById("category").addEventListener("input", function (event) {
@@ -156,20 +154,14 @@ $(document).ready(function () {
 
           }
           //End of code to display items in main page
-
-
-          //Start of code to enlarge item
-          for (i = 0; i < response.length; i++) {
-            document.getElementsByTagName("a")[i].addEventListener("click", function (event) {
-              localStorage.setItem("ItemID", this.id)
-            })//To keep track of which item was clicked by the user
-
-          }
         })
 
       }
 
+      // Code that only runs when the User is on item.html
       else if ($("body").is("#itemPage")) {
+
+        // Code to create and insert elements and nodes for the selected item, using both localStorage values and the API
         for (i = 0; i < response.length; i++) {
           if (response[i].ItemID == localStorage.getItem("ItemID")) {
             let title = document.createElement("H1")
@@ -204,16 +196,20 @@ $(document).ready(function () {
         }
 
       }
-      //End of code to enlarge item
+      //End of code for item.html
 
 
-
+      // Code that only runs when User is on checkout.html
       else if ($("body").is("#checkoutPage")) {
+
+        // Create a local value to store user's cart retrieved from localStorage
         let cartList = JSON.parse(localStorage.getItem("cartItemList"));
 
+        // Automatically display user's account details using localStorage
         $("#username").val(localStorage.getItem("accuser"));
         $("#email").val(localStorage.getItem("accemail"));
 
+        // Code for when the user has nothing in their cart
         if (cartList.length == 0) {
           $("#cartLoad").hide();
           $("#checkoutDisc").text(localStorage.getItem("discount")+"%");   
@@ -221,6 +217,7 @@ $(document).ready(function () {
           $("#total").text("$0"); 
           $("#totalItems").text(cartList.length);
 
+          // Insert elements and nodes to display lack of items in cart
           let item = document.createElement("li");
           item.setAttribute("class", "list-group-item justify-content-between d-flex flex-row lh-condensed");
           let itemdiv = document.createElement("div");
@@ -238,12 +235,11 @@ $(document).ready(function () {
 
           document.getElementById("cart").appendChild(item);
         }
+        // Code for when the user has one more items in their cart
         else {
           
-          
-
+          // Create elements for each item in cart and display them
           for (i = 0; i < response.length; i++) {
-
             cartList.forEach(x => {
               if (parseInt(x.itemID) == response[i].ItemID) {
                 let item = document.createElement("li");
@@ -263,6 +259,8 @@ $(document).ready(function () {
                 deleteButton.setAttribute("role", "button");
                 deleteButton.setAttribute("id", response[i].ItemID);
                 deleteButton.setAttribute("href", "#");
+                
+                // Create a delete button that removes itself visually, in the localStorage value and also refreshes the page
                 deleteButton.setAttribute("onClick",
                   "(function(){console.log('Deleting item with id: ' + id); let cartList= JSON.parse(localStorage.getItem('cartItemList')); for (var i = cartList.length -1; i>=0; i--){if (cartList[i].itemID == id){cartList.splice(i, 1); } } localStorage.setItem('cartItemList', JSON.stringify(cartList)); location.reload();})()");
                 deleteButton.setAttribute("class", "my-auto align-self-end")
@@ -283,11 +281,12 @@ $(document).ready(function () {
 
                 document.getElementById("cart").appendChild(item);
                 $("#totalItems").text(cartList.length);
-
-
               }
+              // End of code to display items in the cart
             })         
           }
+
+          // Code to determine and display the values for subtotal, discount and total of the order
           let subtotal = 0;
           cartList.forEach(element =>{
             subtotal += parseFloat(element.cost);
@@ -300,11 +299,15 @@ $(document).ready(function () {
             $("#total").text("$" + String(Number(subtotal).toFixed(2)));
           }
           $("#cartLoad").hide();
-          $("#checkoutDisc").text(localStorage.getItem("discount") + "%");     
+          $("#checkoutDisc").text(localStorage.getItem("discount") + "%");  
+          
+          // End of code for determining and displaying those values
         }
 
+        // Code for the checkout form
         $("#checkoutForm").submit(function(e){
           e.preventDefault();
+          // User can't submit form with nothing in their cart
           if (cartList.length != 0){
             alert("Your order has been submitted! Redirecting you to the main page...");
             localStorage.setItem("discount", "0")
@@ -316,18 +319,23 @@ $(document).ready(function () {
         });
       }
 
+      // Code that only runs if User is on priceisright.html
       else if ($("body").is("#tpirPage")) {
         
         $("#tpirLoad").hide();
         $("#tpirStart").show();
         let itemPrice = 0;
         
+        // All of this only runs once the user clicks the start button
         $("#tpirStartButton").click(function () {
           $("#tpirStart").hide(200);
           $("#tpirHeader").hide();
           $("#tpirAnswerForm").show();
 
+          // Generate a random ID to choose as the Item for the game
           let randomItemID = (Math.floor(Math.random() * 28) + 1);
+
+          // Code to create and insert elements and nodes for the selected item
           for (i = 0; i < response.length; i++) {
             if (response[i].ItemID == randomItemID) {
               let selectedItem = response[i];
@@ -363,10 +371,16 @@ $(document).ready(function () {
               document.getElementById("chosenItem").appendChild(item)
             }
           }
+          // End of code to create the chosenItem element
 
+          // Prevent user from refreshing the page by submitting the input (Not meant to submit anyway)
           $("#tpirAnswerForm").submit(function(e){
             return false;
           });
+
+          // 1: Code for the countdown, as users are only given 5 seconds to input an answer
+          // 2: Code to add discounts to localStorage value if user wins
+          // 3: Display win or lose messages, and discount value won
           var timeleft = 5;
           var downloadTimer = setInterval(function(){
             if(timeleft <= 0){
@@ -435,26 +449,29 @@ $(document).ready(function () {
 
 
 
-
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": "https://accountdatabase-35b2.restdb.io/rest/account",
-    "method": "GET",
-    "headers": {
-      "content-type": "application/json",
-      "x-apikey": "6017b0836adfba69db8b6c22",
-      "cache-control": "no-cache"
-    }
-  }
-
+  // The account API is only called if user is on these html pages
   if ($("body").is("#loginPage") || $("body").is("#itemPage")) {
 
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://accountdatabase-35b2.restdb.io/rest/account",
+      "method": "GET",
+      "headers": {
+        "content-type": "application/json",
+        "x-apikey": "6017b0836adfba69db8b6c22",
+        "cache-control": "no-cache"
+      }
+    }
+
+    // Code that is only run once the account database responds
     $.ajax(settings).done(function (response) {
+
+      // Code that only runs if the user is on index.html
       if ($("body").is("#loginPage")) {
         localStorage.clear();
 
-
+        // Code that runs when user clicks the login button
         $("#Log-in").submit(function (e) {
           e.preventDefault();
 
@@ -476,6 +493,7 @@ $(document).ready(function () {
               $("#mainAnimation").hide();
               $("#successAnimation").show();
 
+              // Delay before redirecting to main.html
               setTimeout(function () {
                 $("#successAnimation").hide();
                 $("#mainAnimation").show();
@@ -487,6 +505,7 @@ $(document).ready(function () {
             }
           })
 
+          // Code that runs if the input does not match any records in the account database
           if (found == false) {
             console.log("Account not found!");
             $("#mainAnimation").hide();
@@ -500,22 +519,21 @@ $(document).ready(function () {
 
         })
 
+        // Hides main block and displays elements and form for signing up once clicked
         $("#startSignup").click(function () {
           $("#mainBlock").hide();
           $("#signupBlock").show();
         })
 
+        // Code for signing up and adding record to the Account database
         $("#sign-up").submit(function (e) {
           e.preventDefault();
-          console.log("hello");
-          
-
-
+         
           let username = $('#signupUser').val();
           let password = $('#signupPassw').val();
           let email = $('#signupEmail').val();
           
-
+          // Send data via API to Account database
           var jsondata = {
             "username": username,
             "password": password,
@@ -534,16 +552,19 @@ $(document).ready(function () {
               "cache-control": "no-cache"
             },
             "processData": false,
+            // Code for when there is an error, such as when the account already exists.
             "data": JSON.stringify(jsondata),
             error: function (e) {
               console.log("ERROR: " + e.responseJSON.message);
               $("#errMsg").text("Username already exists!");
             },
+            // Makes the submit button disabled so they are unable to submit multiple times and spam the API
             "beforeSend": function () {
               $("#submitsignup").prop("disabled", true);
             }
           }
 
+          // Code that runs once the API responds with a success value indicating the Account record was successfully made
           $.ajax(settings).done(function (response) {
             console.log("Successful creation of account!");
             localStorage.setItem("discount", "0");
@@ -556,18 +577,25 @@ $(document).ready(function () {
         })
 
       }
+      // Code that runs when the user is on item.html
       else if ($("body").is("#itemPage")) {
+
+        // Event listener that automatically displays total cost of order for an individual item
         $("#quantityPurchased").focusout(function () {
           $("#subtotalCost").val("$" + Number(localStorage.getItem("ItemPrice") * $("#quantityPurchased").val()).toFixed(2));
-
         });
 
+        // Adding an order to cart
         $("#addToCart").submit(function (e) {
           e.preventDefault();
 
-
+          // Create a local value to extract localStorage cartItemList
           let cartList = JSON.parse(localStorage.getItem('cartItemList'));
           let found = false;
+
+          // Code for when a CartItem object of a specific item ID already exists
+          // This code ensures that the new quantity and value is updated in that CartItem object, instead of 
+          // creating another CartItem object with the same item ID.
           cartList.forEach(element => {
             if (element.itemID == localStorage.getItem("ItemID")) {
               element.quantity = (parseFloat(element.quantity) + parseFloat($("#quantityPurchased").val())).toString();
@@ -577,21 +605,23 @@ $(document).ready(function () {
           }
           )
 
+          // Code that runs to create a new CartItem object since there isn't a CartItem object 
+          // with the same ItemID already existing in the cartItemList
           if (found == false) {
             let cartItem = new CartItem(localStorage.getItem("ItemID"),
               $("#quantityPurchased").val(), Number(localStorage.getItem("ItemPrice") * $("#quantityPurchased").val()).toFixed(2));
             cartList.push(cartItem);
           }
 
+          // Update localStorage value for cartItemList
           localStorage.setItem('cartItemList', JSON.stringify(cartList));
 
+          // Redirect back to main.html, after 1.5 seconds.
           setTimeout(function () {
             window.location.href = 'main.html'
           }, 1500)
         })
       }
-
-      // end of ajax
     })
   }
 
@@ -605,9 +635,8 @@ function CartItem(itemID, quantity, cost) {
 }
 
 
-//Start of code for triva function
-
-
+// Start of code for trivia function
+// It doesn't make use of the two custom APIs, thus it requires it's own if statement.
 if ($("body").is("#triviaPage")) {
   
   var myHeaders = new Headers();
@@ -632,7 +661,7 @@ if ($("body").is("#triviaPage")) {
 
       document.getElementById("quiz").appendChild(question)
 
-      //Creating triva form
+      // Creating trivia form
       let quiz = document.createElement("form")
       quiz.setAttribute("id", "trivia")
 
@@ -681,9 +710,9 @@ if ($("body").is("#triviaPage")) {
       submitbutton.setAttribute("type", "submit")
       submitbutton.setAttribute("value", "submit")
       submitbutton.setAttribute("id", "submitquiz")
-      //End of creating triva form
+      // End of creating trivia form
 
-      //to randomise correct answer location
+      // Randomise correct answer location
       let randomise = Math.floor(Math.random() * 4) + 1;
 
 
@@ -806,16 +835,6 @@ if ($("body").is("#triviaPage")) {
           result.appendChild(document.createTextNode("Congrats!!! You have earned yourself  a 10% discount (Capped at 60%). Total: " + localStorage.getItem("discount") + "%"))
 
           document.getElementById("quiz").appendChild(result)
-
-         
-
-          
-          
-
-          
-          
-        
-          
         }
 
         // Code for what actions to take when user answers question wrongly
@@ -828,14 +847,10 @@ if ($("body").is("#triviaPage")) {
           result.appendChild(document.createTextNode("Oh no!!! You answered the question incorrectly, Better luck next time!"))
 
           document.getElementById("quiz").appendChild(result)
-
         }
       })
-
-
-    })
-
-
+    }
+  )
 }
 //End of code for triva function
 

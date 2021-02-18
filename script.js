@@ -345,22 +345,19 @@ $(document).ready(function () {
               console.log(itemPrice);
 
               let item = document.createElement("a");
-              item.setAttribute("class", "container flex-column d-flex mx-auto my-auto")
               item.setAttribute("id", response[i].ItemID)
+              item.setAttribute("class", "mx-auto");
 
               let title = document.createElement("p");
-              title.setAttribute("class", "mx-auto");
+              title.setAttribute("class", "text-center");
               let mybr = document.createElement('br');
               let img = document.createElement("img")
 
               img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
-              img.setAttribute("width", "400px")
-              img.setAttribute("height", "400px")
-              img.setAttribute("class", "align-self-center")
+              
+              img.setAttribute("class", "img-fluid");
+              img.setAttribute("style", "max-width:400px; max-height:400px;")
               let node = document.createTextNode(response[i].ItemName);
-              
-              
-              
 
               item.appendChild(img)
               title.appendChild(node)

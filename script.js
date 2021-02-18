@@ -406,11 +406,11 @@ $(document).ready(function () {
                 if(tpirAns-itemPrice <=5){
                   $("#tpirSecondContainer").addClass("d-flex")
                   $("#tpirSecondContainer").show();
-                  let newDisc = parseInt(localStorage.getItem("discount")) + 10;
+                  let newDisc = parseInt(localStorage.getItem("discount")) + 5;
                   if (newDisc>60){
                     newDisc =60;
                   }
-                  $("#discountMessage").text("You have won 10% discount off your next order! (Capped at 60%) Total: " + String(newDisc) + "%");
+                  $("#discountMessage").text("You have won 5% discount off your next order! (Capped at 60%) Total: " + String(newDisc) + "%");
                   localStorage.setItem("discount", String(newDisc)); 
                 }
                 else{
@@ -423,11 +423,11 @@ $(document).ready(function () {
                 if (itemPrice-tpirAns<=5){
                   $("#tpirSecondContainer").addClass("d-flex")
                   $("#tpirSecondContainer").show();
-                  let newDisc = parseInt(localStorage.getItem("discount")) + 10;
+                  let newDisc = parseInt(localStorage.getItem("discount")) + 5;
                   if (newDisc>60){
                     newDisc =60;
                   }
-                  $("#discountMessage").text("You have won 10% discount off your next order! (Capped at 60%) Total: " + String(newDisc) + "%");
+                  $("#discountMessage").text("You have won 5% discount off your next order! (Capped at 60%) Total: " + String(newDisc) + "%");
                   localStorage.setItem("discount", String(newDisc)); 
                 }
                 else{

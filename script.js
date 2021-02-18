@@ -652,7 +652,9 @@ if ($("body").is("#triviaPage")) {
   fetch("https://opentdb.com/api.php?amount=1&category=15&type=multiple&encode=url3986", requestOptions)
     .then(response => response.json())
     .then(result => {
+      $("#triviaLoad").hide();
       console.log(result)
+      
       let question = document.createElement('h1')
       let decodedquestion = decodeURIComponent(result.results[0].question)// decoding the triva question from URL Encoding (RFC 3986)
       question.setAttribute("class","question")
@@ -789,7 +791,7 @@ if ($("body").is("#triviaPage")) {
 
       }
 
-      quiz.appendChild(option1)
+      quiz.appendChild(option1) 
       quiz.appendChild(option2)
       quiz.appendChild(option3)
       quiz.appendChild(option4)

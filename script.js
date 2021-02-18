@@ -452,6 +452,7 @@ $(document).ready(function () {
 
     $.ajax(settings).done(function (response) {
       if ($("body").is("#loginPage")) {
+        localStorage.clear();
 
 
         $("#Log-in").submit(function (e) {
@@ -465,7 +466,9 @@ $(document).ready(function () {
           response.forEach(element => {
             if (element.username == username && element.password == password) {
               
-              localStorage.setItem("discount", "0")
+              localStorage.setItem("discount", "0");
+              localStorage.setItem("accemail", element.email);
+              localStorage.setItem("accuser", username);
               
 
               found = true;
@@ -543,7 +546,9 @@ $(document).ready(function () {
 
           $.ajax(settings).done(function (response) {
             console.log("Successful creation of account!");
-            localStorage.setItem("discount", "0")
+            localStorage.setItem("discount", "0");
+            localStorage.setItem("accuser", username);
+            localStorage.setItem("accemail", email);
             let cartItemList = [];
             localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
             window.location.href = "main.html";

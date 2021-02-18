@@ -389,19 +389,21 @@ $(document).ready(function () {
               let tpirAns = parseFloat($("#tpirAns").val());
               console.log(tpirAns);
 
+              // If user accurately guesses the price:
               if (tpirAns == itemPrice){
                 $("#tpirSecondContainer").addClass("d-flex")
                 $("#tpirSecondContainer").show();
-                let newDisc = parseInt(localStorage.getItem("discount")) + 15;
+                let newDisc = parseInt(localStorage.getItem("discount")) + 20;
                 
                 if (newDisc>60){
                   newDisc =60;
                 }
-                $("#discountMessage").text("You have won 15% discount off your next order! (Capped at 60%) Total: " + String(newDisc) + "%");
+                $("#discountMessage").text("You have won 20% discount off your next order! (Capped at 60%) Total: " + String(newDisc) + "%");
                 localStorage.setItem("discount", String(newDisc)); 
               }
               else if ((tpirAns-itemPrice)>0){
-                if(tpirAns-itemPrice <=5){
+                // If user's answer is within a 3 integer threshold of the answer
+                if(tpirAns-itemPrice <=3){
                   $("#tpirSecondContainer").addClass("d-flex")
                   $("#tpirSecondContainer").show();
                   let newDisc = parseInt(localStorage.getItem("discount")) + 5;
@@ -418,7 +420,8 @@ $(document).ready(function () {
                 }
               }
               else{
-                if (itemPrice-tpirAns<=5){
+                // If user's answer is within a 3 integer threshold of the answer
+                if (itemPrice-tpirAns<=3){
                   $("#tpirSecondContainer").addClass("d-flex")
                   $("#tpirSecondContainer").show();
                   let newDisc = parseInt(localStorage.getItem("discount")) + 5;

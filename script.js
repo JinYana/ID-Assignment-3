@@ -289,15 +289,19 @@ $(document).ready(function () {
           }
           $("#cartLoad").hide();
           
-          // $("#checkoutDisc").text();
+          // $("#checkoutDisc").text();     
+        }
 
-          $("#checkoutForm").submit(function(e){
-            e.preventDefault();
+        $("#checkoutForm").submit(function(e){
+          e.preventDefault();
+          if (cartList.length != 0){
             alert("Your order has been submitted! Redirecting you to the main page...");
             window.location.href = "main.html";
-          })
+          }else{
+            alert("There is nothing on your cart!");
+          }
           
-        }
+        });
       }
 
       else if ($("body").is("#tpirPage")) {

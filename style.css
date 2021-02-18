@@ -84,7 +84,7 @@
 
 #itemcat{
     width: auto;
-    
+    margin: auto;
     font-family: 'Noto Sans HK', sans-serif;
 
 }
@@ -104,6 +104,16 @@
     
 }
 
+@media only screen and (max-width: 415px) {
+    .item{
+    
+        width: 100px;
+        height: 220px;
+        margin: auto;
+        
+    }
+}
+
 
 
 /*Styling for Trivia page(trivia.html)*/
@@ -111,14 +121,19 @@
 .question{
     font-family: 'Quicksand', sans-serif;
     font-size: 35px;
+    margin: auto;
+    margin-bottom: 50px;
+    max-width: 700px;
+    width: auto;
 
 }
 
 #trivia div{
-    margin: 30px;
-    border-style: solid;
-    border: 2px;
-    border-color: black;
+    
+    margin: auto;
+    max-width: 700px;
+    width: auto;
+    
     
 }
 
@@ -132,22 +147,24 @@
     
 }
 
+#triva{
+    margin: auto;
+    width: 100px;
+}
+
 
 #trivia label{
     font-size: 30px;
 }
 
-#trivia #submitquiz{
-    width: 100px;
-    margin: 30px;
-    
-}
+
 
 #quiz{
     display: flex;
-    align-items: center;
+    justify-content: space-between;
     flex-direction: column;
     margin:auto;
+    
     
     
     width: auto;

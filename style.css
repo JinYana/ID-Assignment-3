@@ -30,19 +30,17 @@
 #log-intitle{
     width: 100px;
     margin: auto;
-    
+    color: gainsboro;
 }
 
-#mainAnimation{
-    
-    width: 10vw;
-    margin: auto;
+#secondpart{
+    background: linear-gradient(to bottom, black, white);
 }
 
 #mainBlock{
     display: block;
     margin: 90px auto;
-    padding: 120px 0px;
+    padding: 60px 100px;
     max-width: 450px;
     width: auto;
     border: 2px solid #ccc;
@@ -59,10 +57,6 @@
     border-radius: 16px;    
 }
 
-
-#successAnimation{
-    margin: auto;
-}
 
 #donthaveaccount{
     width: 100px;
@@ -151,6 +145,7 @@
     
     
 }
+
 
 #triviaintro{
     font-family: 'Noto Sans SC', sans-serif;

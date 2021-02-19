@@ -8,6 +8,7 @@ $(document).ready(function () {
   $("#tpirAnswerForm").hide();
   $("#tpirSecondContainer").hide();
   $("#tpirThirdContainer").hide();
+  $("#triviaRight").hide();
 
   // Calling RestDB Inventory API 
   // Only certain pages require information from this database,hence the if statement
@@ -310,7 +311,8 @@ $(document).ready(function () {
           // User can't submit form with nothing in their cart
           if (cartList.length != 0){
             alert("Your order has been submitted! Redirecting you to the main page...");
-            localStorage.setItem("discount", "0")
+            localStorage.setItem("cartItemList", JSON.stringify([]));
+            localStorage.setItem("discount", "0");
             window.location.href = "main.html";
           }else{
             alert("There is nothing on your cart!");
@@ -809,6 +811,7 @@ if ($("body").is("#triviaPage")) {
         if (document.querySelector('input[name="trivia"]:checked').classList.contains("correctans")) {
           document.querySelectorAll('h1').forEach(e => e.remove())
           document.querySelectorAll('#trivia').forEach(e => e.remove())
+          $("#triviaRight").show();
 
           if(parseInt(localStorage.getItem("discount")) < 60){
             let newDisc = parseInt(localStorage.getItem("discount")) + 10;

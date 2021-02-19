@@ -81,7 +81,7 @@ $(document).ready(function () {
         for (i = 0; i < response.length; i++) {
           document.getElementsByTagName("a")[i].addEventListener("click", function (event) {
             localStorage.setItem("ItemID", this.id);
-          })
+          });
 
         }
 
@@ -168,31 +168,31 @@ $(document).ready(function () {
         // Code to create and insert elements and nodes for the selected item, using both localStorage values and the API
         for (i = 0; i < response.length; i++) {
           if (response[i].ItemID == localStorage.getItem("ItemID")) {
-            let title = document.createElement("H1")
-            let img = document.createElement("img")
-            img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
-            img.setAttribute("width", "300px")
-            img.setAttribute("height", "300px")
-            let price = document.createElement("h1")
+            let title = document.createElement("H1");
+            let img = document.createElement("img");
+            img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage;
+            img.setAttribute("width", "300px");
+            img.setAttribute("height", "300px");
+            let price = document.createElement("h1");
             price.id = 'priceValue';
-            let descheader = document.createElement("h3")
-            let itemdesc = document.createElement("h4")
+            let descheader = document.createElement("h3");
+            let itemdesc = document.createElement("h4");
 
-            let itemname = document.createTextNode(response[i].ItemName)
-            let cost = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
-            let decription = document.createTextNode("Description")
-            let itemdescription = document.createTextNode(response[i].ItemDescription)
+            let itemname = document.createTextNode(response[i].ItemName);
+            let cost = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2));
+            let decription = document.createTextNode("Description");
+            let itemdescription = document.createTextNode(response[i].ItemDescription);
 
-            title.appendChild(itemname)
-            price.appendChild(cost)
-            descheader.appendChild(decription)
-            itemdesc.appendChild(itemdescription)
-            document.getElementById("bigitem").appendChild(title)
-            document.getElementById("bigitem").appendChild(img)
-            document.getElementById("bigitem").appendChild(price)
-            document.getElementById("bigitem").appendChild(descheader)
-            document.getElementById("bigitem").appendChild(itemdesc)
-            console.log(itemdescription)
+            title.appendChild(itemname);
+            price.appendChild(cost);
+            descheader.appendChild(decription);
+            itemdesc.appendChild(itemdescription);
+            document.getElementById("bigitem").appendChild(title);
+            document.getElementById("bigitem").appendChild(img);
+            document.getElementById("bigitem").appendChild(price);
+            document.getElementById("bigitem").appendChild(descheader);
+            document.getElementById("bigitem").appendChild(itemdesc);
+            console.log(itemdescription);
 
             localStorage.setItem("ItemPrice", Number(response[i].ItemPrice).toFixed(2));
 
@@ -250,7 +250,7 @@ $(document).ready(function () {
                 item.setAttribute("class", "list-group-item justify-content-between d-flex flex-row lh-condensed");
 
                 let itemdiv = document.createElement("div");
-                itemdiv.setAttribute("style", "max-width: 150px;")
+                itemdiv.setAttribute("style", "max-width: 150px;");
                 let itemHeader = document.createElement("h6");
                 itemHeader.setAttribute("class", "my-0");
                 let itemText = document.createTextNode(response[i].ItemName + " ×" + x.quantity);
@@ -267,7 +267,7 @@ $(document).ready(function () {
                 // Create a delete button that removes itself visually, in the localStorage value and also refreshes the page
                 deleteButton.setAttribute("onClick",
                   "(function(){console.log('Deleting item with id: ' + id); let cartList= JSON.parse(localStorage.getItem('cartItemList')); for (var i = cartList.length -1; i>=0; i--){if (cartList[i].itemID == id){cartList.splice(i, 1); } } localStorage.setItem('cartItemList', JSON.stringify(cartList)); location.reload();})()");
-                deleteButton.setAttribute("class", "my-auto align-self-end")
+                deleteButton.setAttribute("class", "my-auto align-self-end");
                 let deleteText = document.createTextNode("Remove");
                 deleteButton.appendChild(deleteText);
 
@@ -287,7 +287,7 @@ $(document).ready(function () {
                 $("#totalItems").text(cartList.length);
               }
               // End of code to display items in the cart
-            })         
+            });         
           }
 
           // Code to determine and display the values for subtotal, discount and total of the order
@@ -356,7 +356,7 @@ $(document).ready(function () {
               let title = document.createElement("p");
               title.setAttribute("class", "text-center");
               let mybr = document.createElement('br');
-              let img = document.createElement("img")
+              let img = document.createElement("img");
 
               img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
               
@@ -364,13 +364,13 @@ $(document).ready(function () {
               img.setAttribute("style", "max-width:400px; max-height:400px;")
               let node = document.createTextNode(response[i].ItemName);
 
-              item.appendChild(img)
-              title.appendChild(node)
-              title.appendChild(mybr)
+              item.appendChild(img);
+              title.appendChild(node);
+              title.appendChild(mybr);
               
-              item.appendChild(title)
+              item.appendChild(title);
 
-              document.getElementById("chosenItem").appendChild(item)
+              document.getElementById("chosenItem").appendChild(item);
             }
           }
           // End of code to create the chosenItem element
@@ -396,7 +396,7 @@ $(document).ready(function () {
 
               // If user accurately guesses the price:
               if (tpirAns == itemPrice){
-                $("#tpirSecondContainer").addClass("d-flex")
+                $("#tpirSecondContainer").addClass("d-flex");
                 $("#tpirSecondContainer").show();
                 let newDisc = parseInt(localStorage.getItem("discount")) + 20;
                 
@@ -584,8 +584,8 @@ $(document).ready(function () {
               localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
               window.location.href = "main.html";
             }, 2000);
-          })
-        })
+          });
+        });
 
       }
       // Code that runs when the user is on item.html
@@ -614,7 +614,7 @@ $(document).ready(function () {
               found = true;
             }
           }
-          )
+          );
 
           // Code that runs to create a new CartItem object since there isn't a CartItem object 
           // with the same ItemID already existing in the cartItemList
@@ -631,12 +631,12 @@ $(document).ready(function () {
           setTimeout(function () {
             window.location.href = 'main.html'
           }, 1500)
-        })
+        });
       }
-    })
+    });
   }
 
-})
+});
 
 // Create CartItem constructor for CartItem object
 function CartItem(itemID, quantity, cost) {
@@ -663,68 +663,68 @@ if ($("body").is("#triviaPage")) {
     .then(response => response.json())
     .then(result => {
       $("#triviaLoad").hide();
-      console.log(result)
+      console.log(result);
       
-      let question = document.createElement('h1')
-      let decodedquestion = decodeURIComponent(result.results[0].question)// decoding the triva question from URL Encoding (RFC 3986)
-      question.setAttribute("class","question")
+      let question = document.createElement('h1');
+      let decodedquestion = decodeURIComponent(result.results[0].question);// decoding the triva question from URL Encoding (RFC 3986)
+      question.setAttribute("class","question");
 
 
-      question.appendChild(document.createTextNode(decodedquestion))
+      question.appendChild(document.createTextNode(decodedquestion));
 
-      document.getElementById("quiz").appendChild(question)
+      document.getElementById("quiz").appendChild(question);
 
       // Creating trivia form
-      let quiz = document.createElement("form")
-      quiz.setAttribute("id", "trivia")
+      let quiz = document.createElement("form");
+      quiz.setAttribute("id", "trivia");
 
 
-      let option1 = document.createElement("div")
-      let input1 = document.createElement("input")
-      input1.setAttribute("type", "radio")
-      input1.setAttribute("id", "opt1")
-      input1.setAttribute("name", "trivia")
-      let lable1 = document.createElement("label")
-      lable1.setAttribute("for", "opt1")
-      option1.appendChild(lable1)
-      option1.appendChild(input1)
+      let option1 = document.createElement("div");
+      let input1 = document.createElement("input");
+      input1.setAttribute("type", "radio");
+      input1.setAttribute("id", "opt1");
+      input1.setAttribute("name", "trivia");
+      let lable1 = document.createElement("label");
+      lable1.setAttribute("for", "opt1");
+      option1.appendChild(lable1);
+      option1.appendChild(input1);
 
-      let option2 = document.createElement("div")
-      let input2 = document.createElement("input")
-      input2.setAttribute("type", "radio")
-      input2.setAttribute("id", "opt2")
-      input2.setAttribute("name", "trivia")
-      let lable2 = document.createElement("label")
-      lable2.setAttribute("for", "opt2")
-      option2.appendChild(lable2)
-      option2.appendChild(input2)
+      let option2 = document.createElement("div");
+      let input2 = document.createElement("input");
+      input2.setAttribute("type", "radio");
+      input2.setAttribute("id", "opt2");
+      input2.setAttribute("name", "trivia");
+      let lable2 = document.createElement("label");
+      lable2.setAttribute("for", "opt2");
+      option2.appendChild(lable2);
+      option2.appendChild(input2);
 
-      let option3 = document.createElement("div")
-      let input3 = document.createElement("input")
-      input3.setAttribute("type", "radio")
-      input3.setAttribute("id", "opt3")
-      input3.setAttribute("name", "trivia")
-      let lable3 = document.createElement("label")
-      lable3.setAttribute("for", "opt3")
-      option3.appendChild(lable3)
-      option3.appendChild(input3)
+      let option3 = document.createElement("div");
+      let input3 = document.createElement("input");
+      input3.setAttribute("type", "radio");
+      input3.setAttribute("id", "opt3");
+      input3.setAttribute("name", "trivia");
+      let lable3 = document.createElement("label");
+      lable3.setAttribute("for", "opt3");
+      option3.appendChild(lable3);
+      option3.appendChild(input3);
 
-      let option4 = document.createElement("div")
-      let input4 = document.createElement("input")
-      input4.setAttribute("type", "radio")
-      input4.setAttribute("id", "opt4")
-      input4.setAttribute("name", "trivia")
-      let lable4 = document.createElement("label")
-      lable4.setAttribute("for", "opt4")
-      option4.appendChild(lable4)
-      option4.appendChild(input4)
+      let option4 = document.createElement("div");
+      let input4 = document.createElement("input");
+      input4.setAttribute("type", "radio");
+      input4.setAttribute("id", "opt4");
+      input4.setAttribute("name", "trivia");
+      let lable4 = document.createElement("label");
+      lable4.setAttribute("for", "opt4");
+      option4.appendChild(lable4);
+      option4.appendChild(input4);
 
-      let submitbutton = document.createElement("div")
-      let submit = document.createElement("input")
-      submit.setAttribute("type", "submit")
-      submit.setAttribute("value", "submit")
-      submit.setAttribute("id", "submitquiz")
-      submitbutton.appendChild(submit)
+      let submitbutton = document.createElement("div");
+      let submit = document.createElement("input");
+      submit.setAttribute("type", "submit");
+      submit.setAttribute("value", "submit");
+      submit.setAttribute("id", "submitquiz");
+      submitbutton.appendChild(submit);
       // End of creating trivia form
 
       // Randomise correct answer location
@@ -734,17 +734,17 @@ if ($("body").is("#triviaPage")) {
 
 
       if (randomise == 1) {
-        let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
-        lable1.appendChild(document.createTextNode(decodedanswer))
-        input1.setAttribute("class", "correctans")
+        let decodedanswer = decodeURIComponent(result.results[0].correct_answer);
+        lable1.appendChild(document.createTextNode(decodedanswer));
+        input1.setAttribute("class", "correctans");
 
 
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
-          let decodedoption = decodeURIComponent(result.results[0].incorrect_answers[i])
+          let decodedoption = decodeURIComponent(result.results[0].incorrect_answers[i]);
           
           let optionarray = [lable2, lable3, lable4]
-          optionarray[i].appendChild(document.createTextNode(decodedoption))
+          optionarray[i].appendChild(document.createTextNode(decodedoption));
 
         }
 
@@ -753,60 +753,60 @@ if ($("body").is("#triviaPage")) {
       }
 
       else if (randomise == 2) {
-        let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
-        lable2.appendChild(document.createTextNode(decodedanswer))
-        input2.setAttribute("class", "correctans")
+        let decodedanswer = decodeURIComponent(result.results[0].correct_answer);
+        lable2.appendChild(document.createTextNode(decodedanswer));
+        input2.setAttribute("class", "correctans");
 
 
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
-          let decodedoption = decodeURIComponent(result.results[0].incorrect_answers[i])
-          let optionarray = [lable1, lable3, lable4]
-          optionarray[i].appendChild(document.createTextNode(decodedoption))
+          let decodedoption = decodeURIComponent(result.results[0].incorrect_answers[i]);
+          let optionarray = [lable1, lable3, lable4];
+          optionarray[i].appendChild(document.createTextNode(decodedoption));
 
         }
 
       }
 
       else if (randomise == 3) {
-        let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
-        lable3.appendChild(document.createTextNode(decodedanswer))
-        input3.setAttribute("class", "correctans")
+        let decodedanswer = decodeURIComponent(result.results[0].correct_answer);
+        lable3.appendChild(document.createTextNode(decodedanswer));
+        input3.setAttribute("class", "correctans");
 
 
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
-          let decodedoption = decodeURIComponent(result.results[0].incorrect_answers[i])
+          let decodedoption = decodeURIComponent(result.results[0].incorrect_answers[i]);
 
-          let optionarray = [lable1, lable2, lable4]
-          optionarray[i].appendChild(document.createTextNode(decodedoption))
+          let optionarray = [lable1, lable2, lable4];
+          optionarray[i].appendChild(document.createTextNode(decodedoption));
 
         }
 
       }
 
       else if (randomise == 4) {
-        let decodedanswer = decodeURIComponent(result.results[0].correct_answer)
-        lable4.appendChild(document.createTextNode(decodedanswer))
-        input4.setAttribute("class", "correctans")
+        let decodedanswer = decodeURIComponent(result.results[0].correct_answer);
+        lable4.appendChild(document.createTextNode(decodedanswer));
+        input4.setAttribute("class", "correctans");
 
 
 
         for (i = 0; i < result.results[0].incorrect_answers.length; i++) {
-          let decodedoption = decodeURIComponent(result.results[0].incorrect_answers[i])
-          let optionarray = [lable1, lable2, lable3]
-          optionarray[i].appendChild(document.createTextNode(decodedoption))
+          let decodedoption = decodeURIComponent(result.results[0].incorrect_answers[i]);
+          let optionarray = [lable1, lable2, lable3];
+          optionarray[i].appendChild(document.createTextNode(decodedoption));
 
         }
 
       }
 
-      quiz.appendChild(option1) 
-      quiz.appendChild(option2)
-      quiz.appendChild(option3)
-      quiz.appendChild(option4)
-      quiz.appendChild(submitbutton)
-      document.getElementById("quiz").appendChild(quiz)
+      quiz.appendChild(option1); 
+      quiz.appendChild(option2);
+      quiz.appendChild(option3);
+      quiz.appendChild(option4);
+      quiz.appendChild(submitbutton);
+      document.getElementById("quiz").appendChild(quiz);
       // End of randomising correct ans location
 
 
@@ -817,8 +817,8 @@ if ($("body").is("#triviaPage")) {
 
         // Code for what actions to take when user answers question correctly
         if (document.querySelector('input[name="trivia"]:checked').classList.contains("correctans")) {
-          document.querySelectorAll('h1').forEach(e => e.remove())
-          document.querySelectorAll('#trivia').forEach(e => e.remove())
+          document.querySelectorAll('h1').forEach(e => e.remove());
+          document.querySelectorAll('#trivia').forEach(e => e.remove());
           $("#triviaRight").show();
           $("#goback").show();
 
@@ -826,36 +826,36 @@ if ($("body").is("#triviaPage")) {
             let newDisc = parseInt(localStorage.getItem("discount")) + 10;
             localStorage.setItem("discount", String(newDisc));
           }
-          console.log(localStorage.getItem("discount"))
+          console.log(localStorage.getItem("discount"));
 
           
 
 
           
 
-          let result = document.createElement('h1')
-          result.appendChild(document.createTextNode("Congrats!!! You have earned yourself  a 10% discount (Capped at 60%). Total: " + localStorage.getItem("discount") + "%"))
+          let result = document.createElement('h1');
+          result.appendChild(document.createTextNode("Congrats!!! You have earned yourself  a 10% discount (Capped at 60%). Total: " + localStorage.getItem("discount") + "%"));
 
-          document.getElementById("quiz").appendChild(result)
+          document.getElementById("quiz").appendChild(result);
         }
 
         // Code for what actions to take when user answers question wrongly
         else {
 
-          document.querySelectorAll('h1').forEach(e => e.remove())
-          document.querySelectorAll('#trivia').forEach(e => e.remove())
+          document.querySelectorAll('h1').forEach(e => e.remove());
+          document.querySelectorAll('#trivia').forEach(e => e.remove());
 
           $("#triviaWrong").show();
           $("#goback").show();
 
-          let result = document.createElement('h1')
-          result.appendChild(document.createTextNode("Oh no!!! You answered the question incorrectly, Better luck next time!"))
+          let result = document.createElement('h1');
+          result.appendChild(document.createTextNode("Oh no!!! You answered the question incorrectly, Better luck next time!"));
 
-          document.getElementById("quiz").appendChild(result)
+          document.getElementById("quiz").appendChild(result);
         }
-      })
+      });
     }
-  )
+  );
 }
 //End of code for triva function
 

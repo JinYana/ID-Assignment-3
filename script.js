@@ -2,6 +2,7 @@
 $(document).ready(function () {
   // Hide animations and elements that only appear when specific conditions are met
   $("#successAnimation").hide();
+  $("#successSignUpAnimation").hide();
   $("#failAnimation").hide();
   $("#signupBlock").hide();
   $("#tpirStart").hide();
@@ -9,6 +10,8 @@ $(document).ready(function () {
   $("#tpirSecondContainer").hide();
   $("#tpirThirdContainer").hide();
   $("#triviaRight").hide();
+  $("#triviaWrong").hide();
+  $("#goback").hide();
 
   // Calling RestDB Inventory API 
   // Only certain pages require information from this database,hence the if statement
@@ -23,7 +26,7 @@ $(document).ready(function () {
         "x-apikey": "6017c9516adfba69db8b6c31",
         "cache-control": "no-cache"
       }
-    }
+    };
 
   
     // Code that only runs once the API responds
@@ -38,38 +41,38 @@ $(document).ready(function () {
         localStorage.removeItem("ItemPrice");
 
         //Code for injecting elements and nodes into the main page, using information received by the API
-        let itemcat = document.createTextNode("All Items")
-        document.getElementById("itemcat").appendChild(itemcat)
+        let itemcat = document.createTextNode("All Items");
+        document.getElementById("itemcat").appendChild(itemcat);
 
         for (i = 0; i < response.length; i++) {
           let item = document.createElement("a");
-          item.setAttribute("href", "item.html")
-          item.setAttribute("class", "item")
-          item.setAttribute("id", response[i].ItemID)
+          item.setAttribute("href", "item.html");
+          item.setAttribute("class", "item");
+          item.setAttribute("id", response[i].ItemID);
 
-          let title = document.createElement("p")
+          let title = document.createElement("p");
           let mybr = document.createElement('br');
-          let img = document.createElement("img")
+          let img = document.createElement("img");
 
 
 
-          img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
-          img.setAttribute("width", "100px")
-          img.setAttribute("height", "100px")
+          img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage;
+          img.setAttribute("width", "100px");
+          img.setAttribute("height", "100px");
           let node = document.createTextNode(response[i].ItemName);
-          let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
+          let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2));
 
 
 
-          item.appendChild(img)
-          title.appendChild(node)
-          title.appendChild(mybr)
-          title.appendChild(number)
-          item.appendChild(title)
+          item.appendChild(img);
+          title.appendChild(node);
+          title.appendChild(mybr);
+          title.appendChild(number);
+          item.appendChild(title);
 
 
 
-          document.getElementById("inventory").appendChild(item)
+          document.getElementById("inventory").appendChild(item);
 
         }
         //End of code for default main page
@@ -77,7 +80,7 @@ $(document).ready(function () {
         // Add event listener to set localStorage value for item chosen.
         for (i = 0; i < response.length; i++) {
           document.getElementsByTagName("a")[i].addEventListener("click", function (event) {
-            localStorage.setItem("ItemID", this.id)
+            localStorage.setItem("ItemID", this.id);
           })
 
         }
@@ -86,39 +89,39 @@ $(document).ready(function () {
         document.getElementById("category").addEventListener("input", function (event) {
           event.preventDefault();
 
-          document.querySelectorAll('.item').forEach(e => e.remove())//To clear the page
+          document.querySelectorAll('.item').forEach(e => e.remove());//To clear the page
           
 
           //To Change the title to the item category chosen
-          let itemcat = document.getElementById("itemcat")
-          itemcat.innerHTML = document.getElementById("category").value
+          let itemcat = document.getElementById("itemcat");
+          itemcat.innerHTML = document.getElementById("category").value;
 
 
           for (i = 0; i < response.length; i++) {
             //If user chooses All as the category
             if (document.getElementById("category").value == "All") {
               let item = document.createElement("a");
-              item.setAttribute("class", "item")
-              item.setAttribute("href", "item.html")
-              item.setAttribute("id", response[i].ItemID)
+              item.setAttribute("class", "item");
+              item.setAttribute("href", "item.html");
+              item.setAttribute("id", response[i].ItemID);
 
-              let title = document.createElement("p")
+              let title = document.createElement("p");
               let mybr = document.createElement('br');
-              let img = document.createElement("img")
-              img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
-              img.setAttribute("width", "100px")
-              img.setAttribute("height", "100px")
+              let img = document.createElement("img");
+              img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage;
+              img.setAttribute("width", "100px");
+              img.setAttribute("height", "100px");
               let node = document.createTextNode(response[i].ItemName);
-              let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
+              let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2));
 
 
 
-              item.appendChild(img)
-              title.appendChild(node)
-              title.appendChild(mybr)
-              title.appendChild(number)
-              item.appendChild(title)
-              document.getElementById("inventory").appendChild(item)
+              item.appendChild(img);
+              title.appendChild(node);
+              title.appendChild(mybr);
+              title.appendChild(number);
+              item.appendChild(title);
+              document.getElementById("inventory").appendChild(item);
 
 
             }
@@ -127,27 +130,27 @@ $(document).ready(function () {
 
             else if (document.getElementById("category").value == response[i].ItemCategory) {
               let item = document.createElement("a");
-              item.setAttribute("href", "item.html")
-              item.setAttribute("class", "item")
+              item.setAttribute("href", "item.html");
+              item.setAttribute("class", "item");
               item.setAttribute("id", response[i].ItemID)
-              let title = document.createElement("p")
+              let title = document.createElement("p");
               let mybr = document.createElement('br');
-              let img = document.createElement("img")
-              img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage
-              img.setAttribute("width", "100px")
-              img.setAttribute("height", "100px")
+              let img = document.createElement("img");
+              img.src = "https://shopinventory-7a51.restdb.io/media/" + response[i].ItemImage;
+              img.setAttribute("width", "100px");
+              img.setAttribute("height", "100px");
               let node = document.createTextNode(response[i].ItemName);
-              let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2))
-              item.appendChild(img)
-              title.appendChild(node)
-              title.appendChild(mybr)
-              title.appendChild(number)
-              item.appendChild(title)
+              let number = document.createTextNode("$" + Number(response[i].ItemPrice).toFixed(2));
+              item.appendChild(img);
+              title.appendChild(node);
+              title.appendChild(mybr);
+              title.appendChild(number);
+              item.appendChild(title);
 
 
 
 
-              document.getElementById("inventory").appendChild(item)
+              document.getElementById("inventory").appendChild(item);
 
             }
 
@@ -523,7 +526,8 @@ $(document).ready(function () {
         })
 
         // Hides main block and displays elements and form for signing up once clicked
-        $("#startSignup").click(function () {
+        $("#startSignup").click(function (e) {
+          e.preventDefault();
           $("#mainBlock").hide();
           $("#signupBlock").show();
         })
@@ -569,13 +573,17 @@ $(document).ready(function () {
 
           // Code that runs once the API responds with a success value indicating the Account record was successfully made
           $.ajax(settings).done(function (response) {
-            console.log("Successful creation of account!");
-            localStorage.setItem("discount", "0");
-            localStorage.setItem("accuser", username);
-            localStorage.setItem("accemail", email);
-            let cartItemList = [];
-            localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
-            window.location.href = "main.html";
+            $("#successSignUpAnimation").show();
+
+            setTimeout(function () {
+              console.log("Successful creation of account!");
+              localStorage.setItem("discount", "0");
+              localStorage.setItem("accuser", username);
+              localStorage.setItem("accemail", email);
+              let cartItemList = [];
+              localStorage.setItem('cartItemList', JSON.stringify(cartItemList));
+              window.location.href = "main.html";
+            }, 2000);
           })
         })
 
@@ -812,6 +820,7 @@ if ($("body").is("#triviaPage")) {
           document.querySelectorAll('h1').forEach(e => e.remove())
           document.querySelectorAll('#trivia').forEach(e => e.remove())
           $("#triviaRight").show();
+          $("#goback").show();
 
           if(parseInt(localStorage.getItem("discount")) < 60){
             let newDisc = parseInt(localStorage.getItem("discount")) + 10;
@@ -835,6 +844,9 @@ if ($("body").is("#triviaPage")) {
 
           document.querySelectorAll('h1').forEach(e => e.remove())
           document.querySelectorAll('#trivia').forEach(e => e.remove())
+
+          $("#triviaWrong").show();
+          $("#goback").show();
 
           let result = document.createElement('h1')
           result.appendChild(document.createTextNode("Oh no!!! You answered the question incorrectly, Better luck next time!"))

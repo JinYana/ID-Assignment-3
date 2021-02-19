@@ -10,7 +10,7 @@
 #mainHeader{
     color: beige;
     font-size: 8vw;
-    font-family: 'Fredoka One', cursive;
+    font-family: 'Ubuntu', sans-serif;
     
     
 }
@@ -50,7 +50,7 @@
 #signupBlock{
     display: block;
     margin: 90px auto;
-    padding: 120px 0px;
+    padding: 60px 100px;
     max-width: 450px;
     width: auto;
     border: 2px solid #ccc;
@@ -181,3 +181,17 @@
     height: auto;
 }
 
+#triviaRight{
+    width: 300px;
+    margin: auto;
+}
+
+#triviaWrong{
+    width: 300px;
+    margin: auto;
+}
+
+#goback{
+    width: 100px;
+    margin: auto;
+}

@@ -565,6 +565,8 @@ $(document).ready(function () {
             error: function (e) {
               console.log("ERROR: " + e.responseJSON.message);
               $("#errMsg").text("Username already exists!");
+              $("#submitsignup").prop("disabled", false);
+
             },
             // Makes the submit button disabled so they are unable to submit multiple times and spam the API
             "beforeSend": function () {
@@ -575,6 +577,7 @@ $(document).ready(function () {
           // Code that runs once the API responds with a success value indicating the Account record was successfully made
           $.ajax(settings).done(function (response) {
             $("#successSignUpAnimation").show();
+            $("#errMsg").text("");
 
             setTimeout(function () {
               console.log("Successful creation of account!");

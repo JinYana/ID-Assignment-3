@@ -15,7 +15,11 @@
     
 }
 
+#startSignup :hover{
+    cursor: pointer;
+    color: blue;
 
+}
 
 .form-group{
     max-width: 400px;
